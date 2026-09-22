@@ -1,0 +1,70 @@
+{
+  "name": "Use-case proposal",
+  "description": "Propose another bounded scenario before implementing it.",
+  "title": "[Use-case proposal]: ",
+  "labels": [
+    "enhancement",
+    "status:triage"
+  ],
+  "body": [
+    {
+      "type": "markdown",
+      "attributes": {
+        "value": "Reports here are public. Remove tokens, credentials and personal data. For suspected vulnerabilities, use the private security report link on the issue chooser."
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "problem",
+      "attributes": {
+        "label": "User problem and example workflow"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "scope",
+      "attributes": {
+        "label": "Proposed inputs, policy and effect",
+        "description": "Give one allowed and one denied example. State whether effects are synthetic or external; external effects need a separate design and approval."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "failure",
+      "attributes": {
+        "label": "Duplicates, failures and boundaries",
+        "description": "What should happen on retries or failure? What is outside scope?"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "tests",
+      "attributes": {
+        "label": "How would you test it?"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "contribution",
+      "attributes": {
+        "label": "Contribution interest",
+        "description": "Would you propose, implement, test or maintain it? No commitment is required."
+      },
+      "validations": {
+        "required": false
+      }
+    }
+  ]
+}

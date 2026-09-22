@@ -1,0 +1,95 @@
+{
+  "name": "Bug report",
+  "description": "Report an installation or behavior problem.",
+  "title": "[Bug report]: ",
+  "labels": [
+    "bug",
+    "status:triage"
+  ],
+  "body": [
+    {
+      "type": "markdown",
+      "attributes": {
+        "value": "Reports here are public. Remove tokens, credentials and personal data. For suspected vulnerabilities, use the private security report link on the issue chooser."
+      }
+    },
+    {
+      "type": "input",
+      "id": "version",
+      "attributes": {
+        "label": "Plugin version or source commit",
+        "description": "Use the installed version or the commit from git rev-parse HEAD."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "environment",
+      "attributes": {
+        "label": "Environment",
+        "description": "Operating system; OpenClaw, Node and Docker versions where applicable. Mark anything unknown."
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "dropdown",
+      "id": "installation",
+      "attributes": {
+        "label": "Installation method",
+        "options": [
+          "Docker quick start",
+          "Source archive installed in OpenClaw",
+          "ClawHub package",
+          "Other"
+        ]
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "steps",
+      "attributes": {
+        "label": "Steps to reproduce"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "expected",
+      "attributes": {
+        "label": "Expected behavior"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "actual",
+      "attributes": {
+        "label": "Actual behavior"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "logs",
+      "attributes": {
+        "label": "Sanitized logs or screenshots"
+      },
+      "validations": {
+        "required": false
+      }
+    }
+  ]
+}
