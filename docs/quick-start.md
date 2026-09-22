@@ -4,6 +4,8 @@ Try an early DGR plugin for OpenClaw and tell us whether it works on your machin
 
 **No real money moves. No bank, Gmail, cloud account, real invoice, API key, or model subscription is needed.** The plugin stores fictional invoice text and simulated payment records inside a disposable container. It controls only its own two tools.
 
+Want to propose or build another scenario? Use the separate [contributor quick start](contributor-quick-start.md). You can give feedback on either track or both.
+
 ## What you need
 
 - Git.

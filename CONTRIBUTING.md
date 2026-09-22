@@ -1,5 +1,7 @@
 # Add a use case
 
+New here? Follow the [contributor quick start](docs/contributor-quick-start.md) for setup, a small exercise, test commands, and feedback.
+
 Start with the [use-case template](templates/use-case/README.md). Submit a proposal describing the workflow and expected benefit before adding a new effect. The first version supports only sandbox payment and invoice attachment.
 
 Use normal source modules in this repository, not Git submodules. Each module defines a strict action contract. The shared gate owns policy, persistence and effects; never add an independent allow path, arbitrary executable callback, untrusted evidence assertion or agent-selected filesystem path.
