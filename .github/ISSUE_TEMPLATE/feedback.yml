@@ -1,0 +1,80 @@
+{
+  "name": "General feedback",
+  "description": "Tell us what worked, what blocked you, or what could improve.",
+  "title": "[General feedback]: ",
+  "labels": [
+    "feedback",
+    "status:triage"
+  ],
+  "body": [
+    {
+      "type": "markdown",
+      "attributes": {
+        "value": "Reports here are public. Remove tokens, credentials and personal data. For suspected vulnerabilities, use the private security report link on the issue chooser."
+      }
+    },
+    {
+      "type": "dropdown",
+      "id": "track",
+      "attributes": {
+        "label": "What did you try?",
+        "options": [
+          "Installation and default scenarios",
+          "Contribution experience",
+          "Conversational use",
+          "Other"
+        ]
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "dropdown",
+      "id": "result",
+      "attributes": {
+        "label": "Result",
+        "options": [
+          "Worked",
+          "Blocked",
+          "Partly worked",
+          "Suggestion only"
+        ]
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "input",
+      "id": "environment",
+      "attributes": {
+        "label": "Operating system and version, if known"
+      },
+      "validations": {
+        "required": false
+      }
+    },
+    {
+      "type": "input",
+      "id": "version",
+      "attributes": {
+        "label": "Plugin version or source commit, if known"
+      },
+      "validations": {
+        "required": false
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "details",
+      "attributes": {
+        "label": "Feedback",
+        "description": "A short success report is welcome. If blocked, identify the step. Include only sanitized errors or screenshots."
+      },
+      "validations": {
+        "required": true
+      }
+    }
+  ]
+}

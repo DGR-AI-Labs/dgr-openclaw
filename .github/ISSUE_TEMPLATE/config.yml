@@ -1,0 +1,10 @@
+{
+  "blank_issues_enabled": false,
+  "contact_links": [
+    {
+      "name": "Report a security vulnerability privately",
+      "url": "https://github.com/DGR-AI-Labs/dgr-openclaw/security/advisories/new",
+      "about": "Keep suspected vulnerabilities and sensitive details out of public issues."
+    }
+  ]
+}
