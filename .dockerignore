@@ -1,0 +1,6 @@
+.git
+node_modules
+*.tgz
+*.sqlite*
+coverage
+evidence

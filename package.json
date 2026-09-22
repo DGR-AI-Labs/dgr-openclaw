@@ -1,0 +1,41 @@
+{
+  "name": "@dgr-ai-labs/openclaw-sandbox",
+  "version": "0.1.0-beta.1",
+  "private": true,
+  "type": "module",
+  "description": "Two policy-controlled synthetic finance tools for OpenClaw. Sandbox only.",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=24.16.0 <25"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DGR-AI-Labs/dgr-openclaw.git"
+  },
+  "files": [
+    "src/",
+    "openclaw.plugin.json",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "test": "node --test test/config.test.js test/actions.test.js test/gate.test.js test/plugin.test.js",
+    "test:installed": "node --test test/installed.test.js",
+    "test:mutations": "node scripts/mutations.mjs",
+    "package:check": "node scripts/package-check.mjs"
+  },
+  "openclaw": {
+    "extensions": [
+      "./src/index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.9.5 <2026.9.6",
+      "minGatewayVersion": "2026.9.5"
+    },
+    "build": {
+      "openclawVersion": "2026.9.5",
+      "pluginSdkVersion": "2026.9.5"
+    }
+  }
+}

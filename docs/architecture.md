@@ -1,6 +1,6 @@
 # Architecture: one gate, source-reviewed use-case modules
 
-Status: proposed implementation contract. No working enforcement or publication acceptance is claimed by this document. Prepared by Codex under founder direction. The first release targets sandbox payment and invoice attachment only.
+Status: implemented sandbox candidate under validation; independent release acceptance is pending. Prepared by Codex under founder direction. The first release targets sandbox payment and invoice attachment only.
 
 ## How the pieces fit
 
@@ -49,7 +49,7 @@ The shared gate owns policy evaluation, action binding, duplicate-attempt checks
 
 Host configuration owns the policy and sandbox state location. Agent arguments contain only proposed action data. The simulator stores synthetic payments and bounded invoice content in the same database as its records, allowing atomic sandbox effects and records. This guarantee does not apply to external APIs or file writes.
 
-The design is a separate JavaScript/SQLite developer implementation inspired by DGR's existing contract work. It is not a wrapper over the verified Rust core or the private runtime, and inherits none of their acceptance claims. Final authoring disposition and review remain separate.
+The design is a separate JavaScript/SQLite developer implementation inspired by DGR's existing contract work. It is not a wrapper over the verified Rust core or the private runtime, and inherits none of their acceptance claims. Founder authoring disposition was given in the project conversation; independent implementation review and release acceptance remain separate.
 
 ## First two modules
 
@@ -83,4 +83,4 @@ The third independently contributed use case should test whether these boundarie
 
 ## Architecture acceptance
 
-The implementation must demonstrate that both tools pass through the same gate, malformed requests and missing policy deny, attempts cannot be replayed, unknown action versions refuse, effects and records have the declared transactional behavior, and a contributor can identify the finite touchpoints for a new module. Until those tests exist and pass, this remains design intent.
+The implementation must demonstrate that both tools pass through the same gate, malformed requests and missing policy deny, attempts cannot be replayed, unknown action versions refuse, effects and records have the declared transactional behavior, and a contributor can identify the finite touchpoints for a new module. See the candidate validation summary in README.md for observations and remaining review requirements.

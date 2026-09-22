@@ -1,0 +1,22 @@
+name: Sandbox checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  sandbox:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Build pinned isolated host
+        run: docker build -t dgr-sandbox-test .
+      - name: Unit and real SQLite tests
+        run: docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-sandbox-test npm test
+      - name: Independent negative controls
+        run: docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-sandbox-test npm run test:mutations
+      - name: Package content check
+        run: docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-sandbox-test npm run package:check
+      - name: Installed OpenClaw dispatch
+        run: docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-sandbox-test
