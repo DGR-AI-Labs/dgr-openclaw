@@ -1,0 +1,47 @@
+{
+  "name": "Documentation correction",
+  "description": "Help improve installation, configuration or contribution instructions.",
+  "title": "[Documentation correction]: ",
+  "labels": [
+    "documentation",
+    "status:triage"
+  ],
+  "body": [
+    {
+      "type": "markdown",
+      "attributes": {
+        "value": "Reports here are public. Remove tokens, credentials and personal data. For suspected vulnerabilities, use the private security report link on the issue chooser."
+      }
+    },
+    {
+      "type": "input",
+      "id": "location",
+      "attributes": {
+        "label": "Page link and section"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "problem",
+      "attributes": {
+        "label": "What is unclear or incorrect?"
+      },
+      "validations": {
+        "required": true
+      }
+    },
+    {
+      "type": "textarea",
+      "id": "suggestion",
+      "attributes": {
+        "label": "Suggested improvement"
+      },
+      "validations": {
+        "required": false
+      }
+    }
+  ]
+}
