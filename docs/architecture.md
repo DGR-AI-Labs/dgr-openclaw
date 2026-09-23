@@ -1,6 +1,6 @@
 # Architecture: one gate, source-reviewed use-case modules
 
-Status: implemented sandbox candidate under validation; independent release acceptance is pending. Prepared by Codex under founder direction. The first release targets sandbox payment and invoice attachment only.
+Status: implementation merged; founder release approval recorded on 2026-09-23. Remaining independent review and publication checks are tracked in [the release review record](release-review.md). Prepared by Codex under founder direction. The first release targets sandbox payment and invoice attachment only.
 
 ## How the pieces fit
 

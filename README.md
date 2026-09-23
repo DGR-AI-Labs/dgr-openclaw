@@ -1,6 +1,6 @@
 # DGR Sandbox for OpenClaw
 
-**Pre-release candidate. Independent release reviews are pending.** Two tools let you try policy-controlled financial actions using synthetic data. No real money moves and no attachment is uploaded or written to a caller-selected file. This plugin does not protect your other OpenClaw tools.
+**Experimental sandbox, version 0.1.0-beta.1. Founder release approval is recorded; remaining release checks are tracked in the [release review record](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/release-review.md).** Two tools let you try policy-controlled financial actions using synthetic data. No real money moves and no attachment is uploaded or written to a caller-selected file. This plugin does not protect your other OpenClaw tools.
 
 ## What you need
 
@@ -68,35 +68,37 @@ The first command downloads the pinned host and dependencies at build time. The 
 
 ## Contribute or publish
 
-See [CONTRIBUTING.md](CONTRIBUTING.md), the [use-case template](templates/use-case/README.md), and the [architecture](docs/architecture.md). New action classes need review; installing this package does not dynamically load community executors.
+See [CONTRIBUTING.md](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/CONTRIBUTING.md), the [use-case template](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/templates/use-case/README.md), and the [architecture](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/architecture.md). New action classes need review; installing this package does not dynamically load community executors.
 
 For a release: complete independent review and all required checks, inspect the packed file list, bind the candidate to its source commit, confirm ClawHub publisher ownership and compatibility metadata, and run ClawHub package validation and a publish dry run. Public repository visibility and a real publish are separate founder decisions. The development package currently has `private: true` to deter accidental npm publication; review that field deliberately for the chosen registry release process.
 
 Authored by Codex under founder direction. Design principles draw on prior DGR work; this is a separate JavaScript/SQLite sandbox implementation, not the verified Rust core or private runtime. No inherited certification or production assurance is claimed.
 
-## ClawHub publication checklist for the founder
+## ClawHub publication checklist
 
-This is a candidate, not a release approval. After the required independent reviews and final tests:
+Founder approval for the sandbox release was given on 2026-09-23. This does not assert that independent review, publisher authorization or registry installation is complete. See the [release review record](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/release-review.md) and [release notes](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/CHANGELOG.md).
 
-1. Confirm the GitHub organization and ClawHub publisher ownership. The proposed package scope is `@dgr-ai-labs`; registry ownership is not yet verified.
-2. Review and approve making this standalone repository public. It must contain only the plugin project, required attribution and public-safe supporting material.
-3. Set the release metadata and deliberate `private`-field disposition, bind the exact source commit, rerun the tests, and inspect `npm pack --dry-run`. Do not silently change a tested candidate after approval.
-4. Using the official ClawHub CLI, authenticate and inspect your identity, then validate and preview the publication:
+1. Complete and record the remaining independent review and analyzer-evidence acceptance. Name the release maintainer and verify authorization for the ClawHub publisher `dgr-ai-labs`.
+2. Select the final reviewed source commit, rerun required checks and inspect the packed file list. The repository is public. Retain `private: true` to prevent accidental npm publication: ClawHub CLI 0.23.3 accepted it in local validation and publish preview; authenticated registry acceptance remains to be checked.
+3. Authenticate with the official ClawHub CLI, check identity, then validate and preview the exact release checkout:
 
 ```sh
 clawhub login
 clawhub whoami
+git rev-parse HEAD
 clawhub package validate .
-clawhub package publish . --dry-run
+clawhub package publish . --family code-plugin --owner dgr-ai-labs --tags beta --dry-run
 ```
 
-5. Only after the preview names the correct owner, files, source and version, publish the approved candidate:
+4. Confirm the preview's source commit, package name, version and files match the reviewed candidate. Then publish that same checkout, with the remaining release checks complete:
 
 ```sh
-clawhub package publish .
+clawhub package publish . --family code-plugin --owner dgr-ai-labs --tags beta
 ```
 
-These commands are documented upstream; they have not been executed against an authenticated publisher for this candidate. Automated registry review may delay availability. Test a fresh install from the actual registry release before announcing it. Do not treat a local install as evidence that registry publication succeeded.
+5. Wait for registry review and availability. Inspect the published version, then test a fresh registry installation in a disposable profile before announcing availability. Add the verified registry install command here afterward.
+
+The no-upload audit preview resolved `@dgr-ai-labs/openclaw-sandbox` version `0.1.0-beta.1` from commit `6f36499e25365c58612ad0899bc7a3c8bcbcf3e0`. It did not verify authenticated publisher ownership. Any later documentation or code changes require a new preview bound to their final commit. Local installation is not evidence of registry installation.
 
 References: [ClawHub publishing](https://docs.openclaw.ai/clawhub/publishing), [OpenClaw plugin installation](https://docs.openclaw.ai/plugins).
 
@@ -104,4 +106,8 @@ References: [ClawHub publishing](https://docs.openclaw.ai/clawhub/publishing), [
 
 Observed locally in the pinned Node/OpenClaw Docker environment: 44 unit and real-SQLite tests passed; six isolated deliberate-bug controls were caught; package allowlist validation passed; and packed-plugin installation plus seven real Gateway tool invocations passed. The installed checks include allowed/denied actions, replay refusal, real database record failure and the unavailable-state latch. There was no model-driven conversation, real payment, registry installation or customer deployment.
 
-Semgrep, CodeQL and ESLint were run separately; exact-source evidence and final dispositions belong to the review packet. These checks do not replace independent human and non-author cross-model review. The candidate is not yet approved for public release. Host dependencies were resolved during image construction; the tested image is bound in retained evidence, and rebuilding can require fresh dependency review.
+Semgrep, CodeQL and ESLint were run separately; exact-source evidence and final dispositions belong to the review packet. These checks do not replace independent human and non-author cross-model review. Founder release approval is recorded; outstanding independent review and publication checks are listed in the release review record. Host dependencies were resolved during image construction; the tested image is bound in retained evidence, and rebuilding can require fresh dependency review.
+
+## Feedback and participation
+
+Share successful setups, questions and workflow ideas in [GitHub Discussions](https://github.com/DGR-AI-Labs/dgr-openclaw/discussions). Use [Issues](https://github.com/DGR-AI-Labs/dgr-openclaw/issues/new/choose) for reproducible defects and use-case proposals. Include the tested commit or release, OS and OpenClaw version. Report vulnerabilities through [private reporting](https://github.com/DGR-AI-Labs/dgr-openclaw/security/advisories/new).
