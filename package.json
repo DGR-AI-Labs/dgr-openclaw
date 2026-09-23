@@ -3,7 +3,7 @@
   "version": "0.1.0-beta.1",
   "private": true,
   "type": "module",
-  "description": "Two policy-controlled synthetic finance tools for OpenClaw. Sandbox only.",
+  "description": "Evidence-gated simulated payments for the two tools this sandbox guards: a stored synthetic invoice is required before payment.",
   "license": "Apache-2.0",
   "engines": {
     "node": ">=24.16.0 <25"
@@ -23,7 +23,8 @@
     "test": "node --test test/config.test.js test/actions.test.js test/gate.test.js test/plugin.test.js",
     "test:installed": "node --test test/installed.test.js",
     "test:mutations": "node scripts/mutations.mjs",
-    "package:check": "node scripts/package-check.mjs"
+    "package:check": "node scripts/package-check.mjs",
+    "check:listing": "node scripts/check-listing.mjs"
   },
   "openclaw": {
     "extensions": [
