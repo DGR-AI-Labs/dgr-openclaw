@@ -18,7 +18,7 @@ The baseline's [merged-commit CI](https://github.com/DGR-AI-Labs/dgr-openclaw/ac
 
 ClawHub CLI 0.23.3 reported Plugin Inspector PASS with zero breakages or warnings. Its no-upload preview resolved `@dgr-ai-labs/openclaw-sandbox`, version `0.1.0-beta.1`, 12 files and 12,644 archive bytes at the baseline commit. Later documentation changes change the archive and require a new preview. `private: true` did not block those local checks; retain it as an npm-publication guard unless a verified registry requirement requires changing it.
 
-The PR describes Semgrep, ESLint and CodeQL results. The release reviewer must inspect the underlying reports, source bindings, scanned scope and limitations before accepting them; the PR summary alone is not that acceptance. The readiness audit did not rerun these analyzers.
+The original PR describes one-off Semgrep, ESLint and CodeQL results. The [Analyzer evidence workflow](analyzer-evidence.md) now provides reports bound to each scanned revision; a successful run on the final release commit should be used for the release review. The release reviewer must inspect the underlying reports, source bindings, scanned scope and limitations before accepting them; the PR summary alone is not that acceptance. The readiness audit did not rerun these analyzers.
 
 GitHub Discussions and private vulnerability reporting were confirmed enabled. No ClawHub identity was logged in during the audit, so publisher ownership remains unverified. Registry lookup did not establish a visible published package. No registry installation or model-driven conversation was tested.
 

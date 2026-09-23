@@ -1,0 +1,7 @@
+name: Sandbox JavaScript security and quality
+paths:
+  - src
+  - scripts
+  - test
+queries:
+  - uses: security-and-quality

@@ -1,0 +1,10 @@
+{
+  "name": "dgr-analyzer-tooling",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.11.0",
+    "globals": "17.12.0"
+  }
+}
