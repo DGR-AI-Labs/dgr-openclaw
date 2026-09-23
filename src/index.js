@@ -4,7 +4,7 @@ import { modules } from './actions.js';
 import { SandboxGate } from './gate.js';
 
 export default {
-  id: 'dgr-sandbox', name: 'DGR Sandbox',
+  id: 'dgr-gate', name: 'DGR Gate',
   description: 'Two policy-controlled synthetic finance tools. Does not govern other OpenClaw tools.',
   configSchema,
   register(api) {
