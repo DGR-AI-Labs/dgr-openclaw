@@ -10,6 +10,6 @@ Expected source touchpoints are the module definition, explicit action validatio
 
 Run `npm test`, `npm run test:mutations`, `npm run package:check` and the Docker installed-host suite. Tests must establish allowed and denied outcomes by inspecting effects, not just returned messages. Cover malformed input, exact limit boundaries, missing evidence, replay, changed payloads, database failures and uncertain outcomes. Use synthetic fixtures only.
 
-Changes require maintainer scope agreement and review appropriate to their consequence. Enforcement changes require independent human and non-author cross-model review, required analyses and adversarial evidence. Disclose actual human/agent authorship. Do not claim a review or independent rerun you did not perform. The founder approves release; a contributor does not approve their own enforcement change.
+Changes require maintainer scope agreement and review appropriate to their consequence. Enforcement changes require independent human review, required analyses and adversarial evidence. Disclose actual human/agent authorship. Do not claim a review or independent rerun you did not perform. The founder approves release; a contributor does not approve their own enforcement change.
 
 Public contributions must contain no credentials, private project records, personal data or customer material. New modules require a named maintainer and supported-host statement. The project may decline scope expansion even when code is available.

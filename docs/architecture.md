@@ -67,7 +67,7 @@ These modules do not control unrelated OpenClaw tools. A person with privileged 
 3. Supply synthetic examples and independent expected accept/deny/failure cases.
 4. Add the module through explicit source registration and the shared gate.
 5. Pass the common conformance suite and action-specific tests, including installed-host and negative controls where applicable.
-6. Complete required human, non-author cross-model and analyzer review before release acceptance.
+6. Complete required independent human review and analyzer-evidence review before release acceptance.
 
 Document unsupported routes, supported versions and failure-after-effect behavior. Do not equate test volume with enforcement proof. Use accurate human/agent contribution provenance.
 

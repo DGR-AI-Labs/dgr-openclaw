@@ -9,11 +9,12 @@ This release covers only synthetic invoice attachment and simulated USD payment 
 - Implementation audit baseline: `6f36499e25365c58612ad0899bc7a3c8bcbcf3e0`.
 - Final release source: to be recorded after review of the documentation cleanup. A review of the baseline alone does not cover later changes.
 - Release maintainer and publisher operator: to be named before publication.
-- Non-author cross-model review and explicit analyzer-evidence acceptance: not yet recorded here. State reviewer identity, actual model/provider if used, authorship independence, reviewed revision and evidence links. A GitHub handle alone does not establish cross-model review.
+- Release review policy: the founder removed the separate non-author cross-model review requirement on 2026-09-23. Independent human review, required analyses, adversarial evidence and authorship disclosure remain required.
+- Explicit analyzer-evidence acceptance: not yet recorded here. Identify the reviewer, reviewed revision, reports inspected, evidence links and accepted limitations.
 
 ## Observed readiness evidence
 
-The baseline's [merged-commit CI](https://github.com/DGR-AI-Labs/dgr-openclaw/actions/runs/35903047401) passed. A separate Codex audit reran the merged source in an existing isolated OpenClaw 2026.9.5 Docker image, with network disabled: 44 unit/SQLite tests passed, all six deliberate-bug controls were caught, package allowlist validation passed, and the installed-host test passed seven real Gateway tool invocations. This is author-side validation, not an independent human or cross-model rerun.
+The baseline's [merged-commit CI](https://github.com/DGR-AI-Labs/dgr-openclaw/actions/runs/35903047401) passed. A separate Codex audit reran the merged source in an existing isolated OpenClaw 2026.9.5 Docker image, with network disabled: 44 unit/SQLite tests passed, all six deliberate-bug controls were caught, package allowlist validation passed, and the installed-host test passed seven real Gateway tool invocations. This is author-side validation, not an independent human rerun.
 
 ClawHub CLI 0.23.3 reported Plugin Inspector PASS with zero breakages or warnings. Its no-upload preview resolved `@dgr-ai-labs/openclaw-sandbox`, version `0.1.0-beta.1`, 12 files and 12,644 archive bytes at the baseline commit. Later documentation changes change the archive and require a new preview. `private: true` did not block those local checks; retain it as an npm-publication guard unless a verified registry requirement requires changing it.
 

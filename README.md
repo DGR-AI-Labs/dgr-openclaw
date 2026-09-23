@@ -106,7 +106,7 @@ References: [ClawHub publishing](https://docs.openclaw.ai/clawhub/publishing), [
 
 Observed locally in the pinned Node/OpenClaw Docker environment: 44 unit and real-SQLite tests passed; six isolated deliberate-bug controls were caught; package allowlist validation passed; and packed-plugin installation plus seven real Gateway tool invocations passed. The installed checks include allowed/denied actions, replay refusal, real database record failure and the unavailable-state latch. There was no model-driven conversation, real payment, registry installation or customer deployment.
 
-Semgrep, CodeQL and ESLint were run separately; exact-source evidence and final dispositions belong to the review packet. These checks do not replace independent human and non-author cross-model review. Founder release approval is recorded; outstanding independent review and publication checks are listed in the release review record. Host dependencies were resolved during image construction; the tested image is bound in retained evidence, and rebuilding can require fresh dependency review.
+Semgrep, CodeQL and ESLint were run separately; exact-source evidence and final dispositions belong to the review packet. These checks do not replace independent human review. Founder release approval is recorded; outstanding independent review and publication checks are listed in the release review record. Host dependencies were resolved during image construction; the tested image is bound in retained evidence, and rebuilding can require fresh dependency review.
 
 ## Feedback and participation
 
