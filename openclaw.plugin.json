@@ -1,6 +1,6 @@
 {
-  "id": "dgr-sandbox",
-  "name": "DGR Sandbox",
+  "id": "dgr-gate",
+  "name": "DGR Gate",
   "version": "0.1.0-beta.1",
   "description": "Synthetic payment and invoice tools only. No real funds, external files or control over unrelated tools.",
   "categories": [

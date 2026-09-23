@@ -31,10 +31,10 @@ test('packed plugin installs and enforces through real OpenClaw HTTP tool dispat
     }));
     console.log(run('openclaw', ['plugins', 'install', archive, '--force', '--accept-capabilities']));
     const config = JSON.parse(readFileSync(env.OPENCLAW_CONFIG_PATH));
-    config.plugins ??= {}; config.plugins.allow = ['dgr-sandbox'];
-    config.plugins.entries ??= {}; config.plugins.entries['dgr-sandbox'] = { enabled: true, config: {} };
+    config.plugins ??= {}; config.plugins.allow = ['dgr-gate'];
+    config.plugins.entries ??= {}; config.plugins.entries['dgr-gate'] = { enabled: true, config: {} };
     writeFileSync(env.OPENCLAW_CONFIG_PATH, JSON.stringify(config));
-    const inspection = run('openclaw', ['plugins', 'inspect', 'dgr-sandbox', '--runtime', '--json']);
+    const inspection = run('openclaw', ['plugins', 'inspect', 'dgr-gate', '--runtime', '--json']);
     console.log('RUNTIME_INSPECTION', inspection);
     assert.match(inspection, /dgr_sandbox_payment/);
     assert.match(inspection, /dgr_invoice_attachment/);
