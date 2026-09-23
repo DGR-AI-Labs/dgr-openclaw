@@ -19,15 +19,15 @@ The container supplies Node and OpenClaw. You do not need to install or configur
 Open a terminal (PowerShell on Windows is fine). Copy each command below and wait for it to finish. If one fails, stop and send us the error.
 
 ```sh
-git clone --branch sandbox-plugin https://github.com/DGR-AI-Labs/dgr-openclaw.git
+git clone --branch main https://github.com/DGR-AI-Labs/dgr-openclaw.git
 cd dgr-openclaw
-git checkout 5639e82926796b6f7cd62494a500223b772cfd6a
+git checkout 6f36499e25365c58612ad0899bc7a3c8bcbcf3e0
 docker build -t dgr-openclaw-test .
 docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-openclaw-test npm test
 docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-openclaw-test
 ```
 
-The checkout pins the previously tested implementation. Git's “detached HEAD” message is expected. This quick-start page was added afterward, so keep it open in your browser. If you already have a folder with this repository's name, use a fresh parent folder before cloning.
+The checkout pins the merged implementation that passed the release-readiness audit. Git's “detached HEAD” message is expected. These instructions were updated after that commit, so keep this version open in your browser. If you already have a folder with this repository's name, use a fresh parent folder before cloning.
 
 The initial build can take several minutes. The two test runs have networking disabled and use no host-directory mounts.
 
@@ -44,17 +44,17 @@ Warnings alone are not necessarily failures. If you are unsure about the final r
 
 Copy whichever fits:
 
-> WORKED — OS: ___. Both test commands passed. Instructions: clear / confusing at ___.
+> WORKED — OS/version: ___. Commit: ___. OpenClaw version: ___. Both test commands passed. Instructions: clear / confusing at ___.
 
 > DID NOT WORK — OS: ___. Failed command: ___. Error: ___ (or attach a sanitized screenshot).
 
 > COULD NOT START — OS: ___. Missing prerequisite or unclear step: ___.
 
-Reply to the person who sent you this guide, or comment on the [review pull request](https://github.com/DGR-AI-Labs/dgr-openclaw/pull/1). Please do not include credentials or personal data. Testing does not require approving the code.
+Reply to the person who sent you this guide, share a successful setup in [Discussions](https://github.com/DGR-AI-Labs/dgr-openclaw/discussions), or report a failure through the [issue chooser](https://github.com/DGR-AI-Labs/dgr-openclaw/issues/new/choose). Please do not include credentials or personal data. Testing does not require approving the code.
 
 ## Optional: try a conversation
 
-This is separate from the account-free test above. If you already use OpenClaw, the [installation and configuration guide](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/5639e82926796b6f7cd62494a500223b772cfd6a/README.md) explains how to try sample invoice and simulated payment requests in a disposable profile. It requires the documented OpenClaw and Node versions and your own configured model, with its usual charges. Keep all data synthetic.
+This is separate from the account-free test above. If you already use OpenClaw, the [installation and configuration guide](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/6f36499e25365c58612ad0899bc7a3c8bcbcf3e0/README.md) explains how to try sample invoice and simulated payment requests in a disposable profile. It requires the documented OpenClaw and Node versions and your own configured model, with its usual charges. Keep all data synthetic.
 
 ## Cleanup
 

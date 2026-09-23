@@ -6,23 +6,23 @@ The current extension points are ordinary source modules plus explicit changes t
 
 ## Prerequisites
 
-- Git and Docker with Linux-container support, plus internet for the initial build.
+- For implementation and executable tests: Git and Docker with Linux-container support, plus internet for the initial build. A documentation-only proposal needs only repository access and a GitHub account.
 - A GitHub account to open an issue or pull request. Fork the public repository if you do not have write access.
 - Basic JavaScript and test-writing knowledge for code changes. Node is supplied by the Docker image; a local editor is enough.
 - Synthetic data only. No bank, Gmail, payment-provider credentials, or real external effects.
 
-First complete the [default-scenario quick start](quick-start.md). Keep its tested checkout separate from your contribution checkout.
+For implementation or executable testing, first complete the [default-scenario quick start](quick-start.md). Keep its tested checkout separate from your contribution checkout. You may submit a proposal without Docker or running tests; state what you read and which tests you did not run.
 
-## 1. Start from the implementation branch
+## 1. Start from main
 
-In your own clone or fork, fetch the current implementation branch and create a working branch from it. The default main branch does not yet contain the implementation.
+The implementation is merged into `main`. In your own clone or fork, fetch main and create a contribution branch from it.
 
 ```sh
 git fetch origin
-git switch --create contribution/my-scenario origin/sandbox-plugin
+git switch --create contribution/my-scenario origin/main
 ```
 
-For a fork, ensure its sandbox-plugin branch matches the upstream implementation branch before starting. Record your starting commit with `git rev-parse HEAD` in your proposal.
+For a fork, ensure its main branch matches upstream main before starting. Record your starting commit with `git rev-parse HEAD` in your proposal.
 
 Read [CONTRIBUTING](../CONTRIBUTING.md), the [architecture](architecture.md), and the [use-case template](../templates/use-case/README.md).
 
@@ -64,7 +64,7 @@ Cover allowed and denied outcomes, malformed inputs, boundaries, missing evidenc
 
 ## 5. Share results
 
-Open a draft pull request targeting **sandbox-plugin** while the implementation review is open. Link your proposal, state the starting commit, describe actual changes and authorship, and distinguish tests you ran from tests still planned. Do not include credentials, personal data, or private DGR material.
+Open a draft pull request targeting **main**. Link your proposal, state the starting commit, describe actual changes and authorship, and distinguish tests you ran from tests still planned. Do not include credentials, personal data, or private DGR material.
 
 Contributor feedback can be this short:
 
