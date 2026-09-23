@@ -1,55 +1,94 @@
-# Make publication claims match the published sandbox and current source
+# Rename to DGR Gate and prepare beta.2 publication
 
-The README still calls the beta unpublished, while ClawHub serves 0.1.0-beta.1. GitHub About also still says “Pre-implementation.” This bundle replaces the README with scoped evidence-gated execution copy, updates the package summary, moves historical release instructions, and adds a README-derived listing map with a drift check. The About replacement is founder copy only.
+The next artifact uses DGR Gate / `dgr-gate` / `@dgr-ai-labs/openclaw-dgr-gate@0.1.0-beta.2`. The old `@dgr-ai-labs/openclaw-sandbox@0.1.0-beta.1` remains a separate published artifact. This updates the identity, corrects the five publication-copy defects, and prepares the founder's next release.
 
-Derived implementation HEAD: `9a6ba64faf7bb400cea5b8b721c5e094fd1b4dac`.
-Published artifact source: `4cec6796a4f0a08a0c5f1d817d1e1f9321a333c7`.
+Candidate source commit: `75dd94fda3258916115dfaf5b22a807effb6ead1`. Rename prerequisite: `184e59c`, following constants prerequisite `9a6ba64faf7bb400cea5b8b721c5e094fd1b4dac`. Old published source: `4cec6796a4f0a08a0c5f1d817d1e1f9321a333c7`.
 
-The founder-requested constants refactor is the prerequisite commit. **This documentation bundle does not modify src/, tests, openclaw.plugin.json, Dockerfile, workflow logic, or scripts/mutations.mjs relative to that prerequisite.** Local main is older, so the requested main...branch diff includes prior commits; it must not be presented as this bundle's scope.
+The rename is a separate commit before the documentation stack. Its only source change is the registration ID/display name in src/index.js:7; its installed-host fixture changes three identity references. Tool names, database path, state and record formats, reason ordering and enforcement code are preserved. Relative to the rename commit, the amended bundle has zero changes under src/, test/, Dockerfile, workflow logic and scripts/mutations.mjs. The founder's new authorization permits the version bump in both manifests and lockfile. The local main comparison includes earlier CI and constants commits and must not be described as docs-only.
 
-Files: README.md, package.json (description and one script only), RELEASING.md, docs/clawhub-listing.md, docs/policies.md, docs/publication-discrepancy-ledger.md, docs/open-items.md, GITHUB_ABOUT.md, scripts/check-listing.mjs, PR_BODY.md.
+The five corrections are: generic closed-schema rejection rather than special self-attestation detection; beta.2 rather than replacing beta.1; five approved topics; pinned install first; and listing metadata moved out of README. The principle hook is retained. Its scope paragraph and package summary explicitly require stored evidence for payments; attachment creates that evidence. “No real files” is narrowed to no caller-selected file writes because SQLite is a real local file. A future-use-case invitation is included, explicitly excluding present support for real payouts, messages, credential reads and destructive file operations.
 
-Omitted claims: operator-proof integrity; whole-agent governance; absent Cedar/Ed25519/capability tokens/before_tool_call/out-of-process primitives; latency promises; present-tense cross-action governance; provenance attestation; dedicated unconfirmed listing fields/lengths; verified uninstall deletion of sandbox data; unqualified bare catalog installability. The 1000 ms number is explicitly an admission rule, never a completion-time claim.
+Verification: 44 tests passed, 6/6 mutation controls killed, package check PASS, installed-host test 1 passed with the same seven INVOKED pairs, container demonstration passed, listing check passed, seven deliberate listing drift controls rejected, ESLint passed, and old-plugin SQLite state preserved replay protection after renaming. The migration check uses real SQLite and mock host registration; it does not establish end-to-end host config migration. The final archive and installed-host check were rerun after the last README wording change; unit/mutation/demo checks used the identical runtime and metadata with the preceding README wording.
 
-The bypass suite is deferred by explicit scope. The frozen REASONS/STATUS precondition is satisfied; no further constants blocker remains. No bypass test was authored.
-
-Known review gaps: two new /blob/main links cannot resolve before integration; aggregate scan pending differs from clean/benign version scan; the branch needs its prerequisite integrated before a zero-src comparison against main is possible; the exact About-length limit is not established by recon. Every README/RELEASING URL was resolved and failures are retained below. No PR, push, About setting edit, authentication or publication was performed.
+ClawHub 0.23.3 accepted the no-upload preview for this candidate with the five topics supplied. Its text output does not echo topics or prove publisher authorization, namespace availability, acceptance of the artifact, or scans. Source commits are local. No push, PR, GitHub About edit, authentication, account/namespace creation, or publication occurred. The untracked recon report is retained outside the commits.
 
 ## Derived values
 
-| Value | Exact source quote / location |
+| Value | Exact defining source quote / location |
 | --- | --- |
-| Package / version / license | `"@dgr-ai-labs/openclaw-sandbox"`, `"0.1.0-beta.1"`, `"Apache-2.0"`; package.json:2,3,7 |
-| Node / OpenClaw | `">=24.16.0 <25"`, `">=2026.9.5 <2026.9.6"`, `"2026.9.5"`; package.json:9,34–39 after script addition |
-| Tool names | `name: 'dgr_sandbox_payment'`, `name: 'dgr_invoice_attachment'`; src/modules/payment.js:2, src/modules/invoice.js:2 |
-| Runtime config key | `"id": "dgr-sandbox"`; openclaw.plugin.json:2 |
-| Defaults | `input.maxPaymentMinor ?? 1000`, `input.maxAttachmentBytes ?? 4096`, `input.allowedDestinations ?? ['sandbox-vendor']`; src/config.js:23–25 |
-| Statuses/reasons | `export const STATUS = Object.freeze({`, `export const REASONS = Object.freeze({`; src/gate.js:10,16; entries :11–29 |
-| Deadline | `const DEADLINE_MS = 1000;`; src/gate.js:9; denial/rollback checks :75,94–97 |
-| State | `join(stateRoot, 'dgr-sandbox', 'sandbox.sqlite')`; src/index.js:25 |
-| Record guarantee | `verification: 'self-consistency-only'`; src/records.js:17 |
+| Package | `"@dgr-ai-labs/openclaw-dgr-gate"`; package.json:2 |
+| Version | `"0.1.0-beta.2"`; package.json:3, openclaw.plugin.json:4, package-lock.json:3,9 |
+| Runtime identity | `"id": "dgr-gate"`, `"name": "DGR Gate"`; openclaw.plugin.json:2–3; src/index.js:7 |
+| License | `"Apache-2.0"`; package.json:7 |
+| Node / host | `">=24.16.0 <25"`, `">=2026.9.5 <2026.9.6"`, `"2026.9.5"`; package.json:9,34–39 |
+| Tools | `"dgr_sandbox_payment"`, `"dgr_invoice_attachment"`; openclaw.plugin.json:14–15 |
 | Category | `"developer-tools"`; openclaw.plugin.json:7 |
-| Uninstall | Pinned CLI help: `Usage: openclaw plugins uninstall [options] <ids...>`; `--dry-run Show what would be removed without making changes` |
+| State | `join(stateRoot, 'dgr-sandbox', 'sandbox.sqlite')`; src/index.js:25 |
+| Deadline | `const DEADLINE_MS = 1000;`; src/gate.js:9 |
+| Closed fields | `Object.keys(input).length !== module.fields.length`; src/actions.js:7; `Object.keys(input).some(k => !module.fields.includes(k))`; :9 |
+| Record guarantee | `verification: 'self-consistency-only'`; src/records.js:17 |
 
-## Validation evidence
+Topics are founder-approved release inputs in docs/clawhub-listing.md, not existing registry values. The complete summary and README digest are mechanically derived there.
 
-Raw command outputs and diff snapshots follow in the completed local review packet. The final evidence-only update to this file is not part of the package file allowlist.
+## Changed files and line counts
 
-### Scope snapshots before adding this evidence appendix
+Counts below describe the candidate bundle relative to the rename prerequisite, before this evidence-only replacement of PR_BODY.md. This file is excluded from the package.
 
-The command outputs below bind the tested candidate. The following evidence-only commit changes PR_BODY.md and a source citation in the discrepancy ledger, both excluded from the package.
+| File | Lines |
+| --- | --- |
+| CHANGELOG.md | 20 |
+| GITHUB_ABOUT.md | 5 |
+| PR_BODY.md | 501 |
+| README.md | 151 |
+| RELEASING.md | 55 |
+| docs/clawhub-listing.md | 62 |
+| docs/open-items.md | 39 |
+| docs/policies.md | 33 |
+| docs/publication-discrepancy-ledger.md | 63 |
+| openclaw.plugin.json | 49 |
+| package-lock.json | 16 |
+| package.json | 42 |
+| scripts/check-listing.mjs | 59 |
 
-```sh
-git rev-parse HEAD
-```
+## Claim-discipline review
+
+| Constraint | Result |
+| --- | --- |
+| Operator-proof / immutable / tamper-proof / audit-grade | PASS: no such assurance; operator bypass and self-consistency limits explicit |
+| Governs tools other than its own two | PASS: own-tool names and exclusions explicit |
+| Cedar / Ed25519 / capability tokens / before_tool_call / out-of-process gating | PASS: no claims of these absent mechanisms |
+| Latency guarantee | PASS: 1000 ms is an admission threshold; no call-completion promise |
+| Cross-action governance in present tense | PASS: use-case section explicitly future proposals |
+| Model chooses whether the gate runs | PASS: gate is inside the registered tools |
+| Publication / registry-installation status | PASS: old package is published; new identity is an unpublished candidate; no evidence transfer |
+| Provenance | PASS: no attestation claimed; historical source-linked/artifact-only distinction retained |
+| Agent self-attestation detection | PASS: generic unknown-field rejection; payment evidence from stored state |
+| File / external effect claim | PASS: local SQLite disclosed; no real funds or caller-selected writes |
+| Scan qualifier | PASS: old version clean/benign and old aggregate pending both retained; candidate scans not established |
+| README length and links | PASS: 151 lines; absolute URLs; two future-main files currently 404, disclosed below |
+
+The bypass suite remains explicitly deferred, with no remaining constants precondition blocker. No bypass test was authored.
+
+## Remaining release gaps and NOT ESTABLISHED
+
+- Candidate integration and remote CI on the final source; the local main diff includes prior work.
+- New identity availability, publisher authorization, candidate publication and fresh registry installation; preview is not a release.
+- New package/version scan and provenance fields; old aggregate pending versus version clean remains historical evidence only.
+- End-to-end migration of an existing OpenClaw profile; replay continuity was checked with real SQLite and mock registration, while fresh installation was checked through the real Gateway.
+- New RELEASING.md and docs/policies.md links are 404 until integrated into main; all other 17 audited URLs returned 200.
+- Dedicated registry homepage/license/screenshots/permissions fields, independent long-description input, summary maximum, unknown string/dimension limits, exact GitHub About limit, complete dependency-tree assurance, absolute default state path, uninstall data deletion and provenance upgrade results remain NOT ESTABLISHED. Unconfirmed optional listing fields are unset.
+
+## Raw verification output
+
+Commands run in the pinned Docker image use Node 24 and OpenClaw 2026.9.5. Outputs below are real. Long installed-host logs are cut only in the middle and marked. The local logs also retain full output. Source HEAD and diff snapshots precede this evidence-only file update.
+
+### `git rev-parse HEAD`
 
 ```text
-c12e10062beca9ff3c45a0adb7370d54e93cec1c
+75dd94fda3258916115dfaf5b22a807effb6ead1
 ```
 
-```sh
-git diff --stat main...docs/publication-accuracy
-```
+### `git diff --stat main...docs/publication-accuracy`
 
 ```text
  .github/analyzers/codeql.yml           |    7 +
@@ -61,119 +100,157 @@ git diff --stat main...docs/publication-accuracy
  .github/workflows/analyzers.yml        |  124 ++++
  .gitignore                             |    2 +
  .semgrepignore                         |    3 +
- CHANGELOG.md                           |   14 +
+ CHANGELOG.md                           |   20 +
  CONTRIBUTING.md                        |    4 +-
  GITHUB_ABOUT.md                        |    5 +
- PR_BODY.md                             |   36 ++
- README.md                              |  164 ++++--
- RELEASING.md                           |   53 ++
+ PR_BODY.md                             |  501 ++++++++++++++++
+ README.md                              |  174 +++---
+ RELEASING.md                           |   55 ++
  SECURITY.md                            |    2 +-
  docs/analyzer-evidence.md              |   36 ++
  docs/architecture.md                   |    4 +-
- docs/clawhub-listing.md                |   54 ++
+ docs/clawhub-listing.md                |   62 ++
  docs/contributor-quick-start.md        |   14 +-
  docs/feedback.md                       |    4 +-
  docs/open-items.md                     |   39 ++
  docs/policies.md                       |   33 ++
- docs/publication-discrepancy-ledger.md |   54 ++
+ docs/publication-discrepancy-ledger.md |   63 ++
  docs/quick-start.md                    |   12 +-
  docs/release-review.md                 |   33 ++
- package.json                           |    5 +-
- scripts/check-listing.mjs              |   55 ++
+ openclaw.plugin.json                   |    6 +-
+ package-lock.json                      |    8 +-
+ package.json                           |    9 +-
+ scripts/check-listing.mjs              |   59 ++
  scripts/mutations.mjs                  |    2 +-
  src/gate.js                            |   55 +-
- src/index.js                           |    6 +-
- test/installed.test.js                 |    2 +
- 32 files changed, 1874 insertions(+), 105 deletions(-)
+ src/index.js                           |    8 +-
+ test/installed.test.js                 |    8 +-
+ 34 files changed, 2388 insertions(+), 121 deletions(-)
 ```
 
-That comparison is NOT zero-src: it includes prior commits on the stacked branch. The bundle-only comparison is:
-
-```sh
-git diff --stat 9a6ba64...HEAD
-```
+### `git diff --stat 184e59c HEAD`
 
 ```text
+ CHANGELOG.md                           |  10 +-
  GITHUB_ABOUT.md                        |   5 +
- PR_BODY.md                             |  36 +++++++
- README.md                              | 170 ++++++++++++++++++++-------------
- RELEASING.md                           |  53 ++++++++++
- docs/clawhub-listing.md                |  54 +++++++++++
- docs/open-items.md                     |  39 ++++++++
- docs/policies.md                       |  33 +++++++
- docs/publication-discrepancy-ledger.md |  54 +++++++++++
- package.json                           |   5 +-
- scripts/check-listing.mjs              |  55 +++++++++++
- 10 files changed, 434 insertions(+), 70 deletions(-)
+ PR_BODY.md                             | 501 +++++++++++++++++++++++++++++++++
+ README.md                              | 178 +++++++-----
+ RELEASING.md                           |  55 ++++
+ docs/clawhub-listing.md                |  62 ++++
+ docs/open-items.md                     |  39 +++
+ docs/policies.md                       |  33 +++
+ docs/publication-discrepancy-ledger.md |  63 +++++
+ openclaw.plugin.json                   |   2 +-
+ package-lock.json                      |   4 +-
+ package.json                           |   7 +-
+ scripts/check-listing.mjs              |  59 ++++
+ 13 files changed, 940 insertions(+), 78 deletions(-)
 ```
 
-```sh
-git diff --exit-code 9a6ba64...HEAD -- src openclaw.plugin.json Dockerfile .github test scripts/mutations.mjs
+### `git diff --stat 184e59c HEAD -- src/ test/ scripts/mutations.mjs Dockerfile .github/workflows/`
+
+```text
 ```
+
+Exit status 0; no output.
+
+### `docker build --progress plain -t dgr-gate-publication-test .`
+
+```text
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 410B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:24.21.0-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 92B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 155.61kB 0.1s done
+#4 DONE 0.1s
+
+#5 [1/4] FROM docker.io/library/node:24.21.0-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
+#5 resolve docker.io/library/node:24.21.0-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6 0.0s done
+#5 DONE 0.0s
+
+#6 [2/4] RUN npm install --global --ignore-scripts --omit=optional openclaw@2026.9.5     && openclaw --version
+#6 CACHED
+
+#7 [3/4] WORKDIR /plugin
+#7 CACHED
+
+#8 [4/4] COPY --chown=node:node . .
+#8 DONE 0.2s
+
+#9 exporting to image
+#9 exporting layers
+#9 exporting layers 0.6s done
+#9 exporting manifest sha256:9d7a561a666aef5d4d1fa772612a10ce7fd5839fd8eff6005e48ec6ce1dd0c08 0.0s done
+#9 exporting config sha256:0c67a06d50d54be3328647f691b626e95ccc3d09d676047e5257b567972d75c1 0.0s done
+#9 exporting attestation manifest sha256:591b574b94a661b30c6c2e8e9a8d25423c6437159f3df49ef13b593d69e01c79 0.0s done
+#9 exporting manifest list sha256:0aca49ad704e8421b38bb29b5c1835e337e34cc99f29d191498c3391aa165f70 0.0s done
+#9 naming to docker.io/library/dgr-gate-publication-test:latest done
+#9 unpacking to docker.io/library/dgr-gate-publication-test:latest
+#9 unpacking to docker.io/library/dgr-gate-publication-test:latest 0.4s done
+#9 DONE 1.1s
+```
+
+### `docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-gate-publication-test npm run test`
 
 ```text
 
-```
-
-The preceding command produced no output and exited 0.
-
-### Raw verification outputs
-
-The npm test commands ran inside the pinned Docker image with `--rm --network none --cap-drop ALL --security-opt no-new-privileges`; npm pack and the pure-JS listing check ran in the checkout.
-
-```sh
-npm test
-```
-
-```text
-
-> @dgr-ai-labs/openclaw-sandbox@0.1.0-beta.1 test
+> @dgr-ai-labs/openclaw-dgr-gate@0.1.0-beta.2 test
 > node --test test/config.test.js test/actions.test.js test/gate.test.js test/plugin.test.js
 
-✔ malformed payment refuses: null (1.374407ms)
-✔ malformed payment refuses: [] (0.183687ms)
-✔ malformed payment refuses: {} (0.164251ms)
-✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":500,"currency":"USD","extra":1} (0.114617ms)
-✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":500,"currency":"USD","trustedEvidence":true} (1.301749ms)
-✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":0,"currency":"USD"} (0.231826ms)
-✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":-1,"currency":"USD"} (0.093986ms)
-✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":1.5,"currency":"USD"} (0.153088ms)
-✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":"500","currency":"USD"} (0.165347ms)
-✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":500,"currency":"EUR"} (0.22764ms)
-✔ malformed payment refuses: {"invoiceId":"demo","destination":"../x","amountMinor":500,"currency":"USD"} (0.128272ms)
-✔ malformed payment refuses: {"invoiceId":"x\ny","destination":"sandbox-vendor","amountMinor":500,"currency":"USD"} (0.081926ms)
-✔ canonical action ignores property order and binds each payment field (0.69398ms)
-✔ invoice uses UTF-8 byte length, rejects malformed Unicode and raw paths (0.234117ms)
-✔ unknown action refuses (0.100863ms)
-✔ default sandbox policy is immutable and canonical (2.764561ms)
-✔ invalid configuration rejects: null (0.300097ms)
-✔ invalid configuration rejects: [] (0.165746ms)
-✔ invalid configuration rejects: {"unknown":true} (0.12568ms)
-✔ invalid configuration rejects: {"maxPaymentMinor":null} (0.165845ms)
-✔ invalid configuration rejects: {"maxPaymentMinor":0} (0.105447ms)
-✔ invalid configuration rejects: {"maxPaymentMinor":1.1} (2.909078ms)
-✔ invalid configuration rejects: {"maxPaymentMinor":"1000"} (0.360395ms)
-✔ invalid configuration rejects: {"maxPaymentMinor":null} (0.286742ms)
-✔ invalid configuration rejects: {"allowedDestinations":[]} (0.420993ms)
-✔ invalid configuration rejects: {"allowedDestinations":["x","x"]} (0.291327ms)
-✔ invalid configuration rejects: {"allowedDestinations":["../x"]} (0.120896ms)
-✔ invalid configuration rejects: {"maxAttachmentBytes":-1} (0.144517ms)
-✔ invalid configuration rejects: {"maxAttachmentBytes":262145} (0.090796ms)
-✔ each policy dimension changes its commitment (3.879833ms)
-✔ allowed actions create exact synthetic effects and consistent receipts (35.868027ms)
-✔ over limit records denial and creates no effect (16.562447ms)
-✔ wrong destination records denial and creates no effect (13.568054ms)
-✔ agent evidence records denial and creates no effect (13.443172ms)
-✔ exact payment limit accepted; invoice evidence required (26.096185ms)
-✔ same attempt, changed action, second connection and new attempt cannot replay a payment (26.417311ms)
-✔ attachment is immutable and byte-bounded (17.704729ms)
-✔ real record-write failure rolls back effect and latches unavailable (17.536691ms)
-✔ real database lock produces no effect (511.948071ms)
-✔ real commit failure returns uncertain and does not retry (514.750111ms)
-✔ unknown fields and absent call IDs cannot produce effects (14.756787ms)
-✔ record tampering fails self-consistency verification (22.556268ms)
-✔ mock-host: exactly two tool registrations, real gate and lifecycle (34.232991ms)
-✔ mock-host: unavailable storage fails closed (1.202182ms)
+✔ malformed payment refuses: null (2.224522ms)
+✔ malformed payment refuses: [] (0.191896ms)
+✔ malformed payment refuses: {} (0.243752ms)
+✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":500,"currency":"USD","extra":1} (0.132974ms)
+✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":500,"currency":"USD","trustedEvidence":true} (1.432453ms)
+✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":0,"currency":"USD"} (0.261369ms)
+✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":-1,"currency":"USD"} (0.101621ms)
+✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":1.5,"currency":"USD"} (0.19956ms)
+✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":"500","currency":"USD"} (0.126703ms)
+✔ malformed payment refuses: {"invoiceId":"demo","destination":"sandbox-vendor","amountMinor":500,"currency":"EUR"} (0.257785ms)
+✔ malformed payment refuses: {"invoiceId":"demo","destination":"../x","amountMinor":500,"currency":"USD"} (0.127599ms)
+✔ malformed payment refuses: {"invoiceId":"x\ny","destination":"sandbox-vendor","amountMinor":500,"currency":"USD"} (0.077436ms)
+✔ canonical action ignores property order and binds each payment field (0.816952ms)
+✔ invoice uses UTF-8 byte length, rejects malformed Unicode and raw paths (3.643837ms)
+✔ unknown action refuses (0.117845ms)
+✔ default sandbox policy is immutable and canonical (2.691821ms)
+✔ invalid configuration rejects: null (0.170994ms)
+✔ invalid configuration rejects: [] (0.133272ms)
+✔ invalid configuration rejects: {"unknown":true} (0.19329ms)
+✔ invalid configuration rejects: {"maxPaymentMinor":null} (0.124812ms)
+✔ invalid configuration rejects: {"maxPaymentMinor":0} (0.110678ms)
+✔ invalid configuration rejects: {"maxPaymentMinor":1.1} (1.270515ms)
+✔ invalid configuration rejects: {"maxPaymentMinor":"1000"} (0.195579ms)
+✔ invalid configuration rejects: {"maxPaymentMinor":null} (0.133173ms)
+✔ invalid configuration rejects: {"allowedDestinations":[]} (0.268535ms)
+✔ invalid configuration rejects: {"allowedDestinations":["x","x"]} (0.160246ms)
+✔ invalid configuration rejects: {"allowedDestinations":["../x"]} (0.105006ms)
+✔ invalid configuration rejects: {"maxAttachmentBytes":-1} (0.134864ms)
+✔ invalid configuration rejects: {"maxAttachmentBytes":262145} (0.064795ms)
+✔ each policy dimension changes its commitment (0.274209ms)
+✔ allowed actions create exact synthetic effects and consistent receipts (24.266898ms)
+✔ over limit records denial and creates no effect (29.826213ms)
+✔ wrong destination records denial and creates no effect (19.227137ms)
+✔ agent evidence records denial and creates no effect (16.138983ms)
+✔ exact payment limit accepted; invoice evidence required (21.900147ms)
+✔ same attempt, changed action, second connection and new attempt cannot replay a payment (28.95641ms)
+✔ attachment is immutable and byte-bounded (24.451131ms)
+✔ real record-write failure rolls back effect and latches unavailable (21.006357ms)
+✔ real database lock produces no effect (510.318609ms)
+✔ real commit failure returns uncertain and does not retry (510.678051ms)
+✔ unknown fields and absent call IDs cannot produce effects (15.728802ms)
+✔ record tampering fails self-consistency verification (14.38853ms)
+✔ mock-host: exactly two tool registrations, real gate and lifecycle (35.229762ms)
+✔ mock-host: unavailable storage fails closed (1.443103ms)
 ℹ tests 44
 ℹ suites 0
 ℹ pass 44
@@ -181,16 +258,14 @@ npm test
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1330.673197
+ℹ duration_ms 1325.516041
 ```
 
-```sh
-npm run test:mutations
-```
+### `docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-gate-publication-test npm run test:mutations`
 
 ```text
 
-> @dgr-ai-labs/openclaw-sandbox@0.1.0-beta.1 test:mutations
+> @dgr-ai-labs/openclaw-dgr-gate@0.1.0-beta.2 test:mutations
 > node scripts/mutations.mjs
 
 KILLED payment-limit
@@ -202,38 +277,58 @@ KILLED invoice-replay-reason
 6/6 mutants killed; baseline passed.
 ```
 
-```sh
-npm run package:check
-```
+### `docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-gate-publication-test npm run package:check`
 
 ```text
 
-> @dgr-ai-labs/openclaw-sandbox@0.1.0-beta.1 package:check
+> @dgr-ai-labs/openclaw-dgr-gate@0.1.0-beta.2 package:check
 > node scripts/package-check.mjs
 
-{"status":"PASS","files":["LICENSE","README.md","SECURITY.md","openclaw.plugin.json","package.json","src/actions.js","src/config.js","src/gate.js","src/index.js","src/modules/invoice.js","src/modules/payment.js","src/records.js"],"bytes":13511}
+{"status":"PASS","files":["LICENSE","README.md","SECURITY.md","openclaw.plugin.json","package.json","src/actions.js","src/config.js","src/gate.js","src/index.js","src/modules/invoice.js","src/modules/payment.js","src/records.js"],"bytes":13991}
 ```
 
-```sh
-npm run test:installed
-```
+### `docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-gate-publication-test npm run test:installed`
 
 ```text
 
-> @dgr-ai-labs/openclaw-sandbox@0.1.0-beta.1 test:installed
+> @dgr-ai-labs/openclaw-dgr-gate@0.1.0-beta.2 test:installed
 > node --test test/installed.test.js
 
 HOST OpenClaw 2026.9.5 (ec9c1a1)
-PACKAGE sha512-VAByAVMCcINyCUzCszrMd09ZQwVjlgc0bUBTdhDj7fGBTyonR6EpHV89fHpB2RYy3D4P9sofFutQ0p8yXv7HPQ==
-WARNING - Installing plugin from local archive: /tmp/dgr-installed-S80chR/dgr-ai-labs-openclaw-sandbox-0.1.0-beta.1.tgz
+PACKAGE sha512-kxCNvi/3NIYopPfVQ8xaq/KTUJ/OVYiwkQ/KOe7A/vuj5uVFxJS3W2v+ZSsLMqWYGAQSkfPsSnESBd4NGYYO+A==
+WARNING - Installing plugin from local archive: /tmp/dgr-installed-937wga/dgr-ai-labs-openclaw-dgr-gate-0.1.0-beta.2.tgz
 This source is outside ClawHub review and trust metadata. Only continue if you trust the publisher, package contents, and install source.
-Extracting /tmp/dgr-installed-S80chR/dgr-ai-labs-openclaw-sandbox-0.1.0-beta.1.tgz…
-Plugin manifest id "dgr-sandbox" differs from npm package name "@dgr-ai-labs/openclaw-sandbox"; using manifest id as the config key.
-Installing to /tmp/dgr-installed-S80chR/state/extensions/dgr-sandbox…
-Installed plugin: dgr-sandbox
+Extracting /tmp/dgr-installed-937wga/dgr-ai-labs-openclaw-dgr-gate-0.1.0-beta.2.tgz…
+Plugin manifest id "dgr-gate" differs from npm package name "@dgr-ai-labs/openclaw-dgr-gate"; using manifest id as the config key.
+Installing to /tmp/dgr-installed-937wga/state/extensions/dgr-gate…
+Installed plugin: dgr-gate
 Saved for the next Gateway start.
 
-[... MIDDLE CUT: runtime-inspection JSON ...]
+RUNTIME_INSPECTION {
+  "workspaceDir": "/tmp/dgr-installed-937wga/state/workspace",
+  "plugin": {
+    "id": "dgr-gate",
+    "name": "DGR Gate",
+    "description": "Two policy-controlled synthetic finance tools. Does not govern other OpenClaw tools.",
+    "packageVersion": "0.1.0-beta.2",
+    "version": "0.1.0-beta.2",
+    "builtWithOpenClawVersion": "2026.9.5",
+    "packageName": "@dgr-ai-labs/openclaw-dgr-gate",
+[... CUT 151 middle lines of runtime inspection ...]
+        "tools: dgr_sandbox_payment"
+      ],
+      "hooks": [],
+      "mcpServers": [],
+      "cliCommands": [],
+      "cliBackends": [],
+      "skills": [],
+      "dangerousConfigFlags": []
+    },
+    "acceptedSurfaceHash": "a7cc8beb651fa63b44f380bc02ef844064480831cb7b45d7cefc4c645e38acdb",
+    "acceptedSurfaceAt": "2026-09-23T21:54:09.171Z"
+  }
+}
+
 INVOKED dgr_invoice_attachment attach-demo simulated ALLOWED
 INVOKED dgr_sandbox_payment over-limit denied AMOUNT_LIMIT
 INVOKED dgr_sandbox_payment pay-demo simulated ALLOWED
@@ -241,37 +336,37 @@ INVOKED dgr_sandbox_payment pay-demo denied DUPLICATE_ATTEMPT
 INVOKED dgr_sandbox_payment pay-again denied INVOICE_ALREADY_PAID
 INVOKED dgr_invoice_attachment fault-call unavailable STORE_FAILURE
 INVOKED dgr_invoice_attachment latched-call unavailable STORE_UNAVAILABLE
-GATEWAY_LOG 2026-09-23T20:58:37.520+00:00 [gateway] loading configuration…
-2026-09-23T20:58:37.545+00:00 [gateway] resolving authentication…
-2026-09-23T20:58:37.548+00:00 [gateway] starting...
-2026-09-23T20:58:37.572+00:00 [gateway] shutdown budget at startup: drain=315000ms shutdown=325000ms reserve=10000ms exitMargin=5000ms; source=Gateway stop policy=330000ms
-2026-09-23T20:58:37.675+00:00 [gateway] spawn broker ready pid=224
-2026-09-23T20:58:38.537+00:00 [gateway] starting HTTP server...
-2026-09-23T20:58:39.517+00:00 [gateway] ready
-2026-09-23T20:58:39.694+00:00 [gateway] starting channels and sidecars...
-2026-09-23T20:58:39.709+00:00 [gateway] agent model: openai/gpt-6-astra (thinking=medium, fast=off)
-2026-09-23T20:58:39.710+00:00 [gateway] http server listening (2 plugins: dgr-sandbox, memory-core; 2.1s)
-2026-09-23T20:58:39.710+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-09-23.log
-2026-09-23T20:58:40.063+00:00 [gateway/channels] skipping channel start (OPENCLAW_SKIP_CHANNELS=1 or OPENCLAW_SKIP_PROVIDERS=1)
-2026-09-23T20:58:40.144+00:00 [plugins] memory-core: created managed dreaming cron job.
-2026-09-23T20:58:40.147+00:00 [gateway] startup outcomes: internal-hooks=skipped (not-configured); internal-startup-hook=skipped (no-handlers-loaded); gateway-start-hooks=scheduled; gmail-watcher=skipped (hooks-disabled); gmail-model=skipped (not-configured)
-2026-09-23T20:58:40.150+00:00 [heartbeat] started
-2026-09-23T20:58:40.158+00:00 [gateway] ready
-2026-09-23T20:58:40.401+00:00 [admission] closed: stop (SIGTERM)
-2026-09-23T20:58:40.402+00:00 [gateway] received SIGTERM; shutting down
-2026-09-23T20:58:40.404+00:00 [gateway] shutdown budget at shutdown: drain=315000ms shutdown=325000ms reserve=10000ms exitMargin=5000ms; source=Gateway stop policy=330000ms
-2026-09-23T20:58:40.407+00:00 [gateway] draining active work before stop with timeout 315000ms: rootRequests=2
-2026-09-23T20:58:40.687+00:00 [gateway] sidecars.restart-sentinel failed after gateway ready: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:58:40.689+00:00 [main-session-restart-recovery] main-session restart recovery failed: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:58:40.714+00:00 [cron] failed to enter start root: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:58:40.743+00:00 [gateway] restart sentinel refresh failed: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:58:40.745+00:00 [gateway] gateway_start hook failed: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:58:40.756+00:00 [gateway] update check readiness wait failed: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:58:40.911+00:00 [gateway] active-work drain settled; beginning server close
-2026-09-23T20:58:40.934+00:00 [gmail-watcher] gmail watcher stopped
-2026-09-23T20:58:40.980+00:00 [shutdown] completed cleanly in 64ms
+GATEWAY_LOG 2026-09-23T21:54:21.827+00:00 [gateway] loading configuration…
+2026-09-23T21:54:21.851+00:00 [gateway] resolving authentication…
+2026-09-23T21:54:21.854+00:00 [gateway] starting...
+2026-09-23T21:54:21.879+00:00 [gateway] shutdown budget at startup: drain=315000ms shutdown=325000ms reserve=10000ms exitMargin=5000ms; source=Gateway stop policy=330000ms
+2026-09-23T21:54:21.983+00:00 [gateway] spawn broker ready pid=224
+2026-09-23T21:54:22.962+00:00 [gateway] starting HTTP server...
+2026-09-23T21:54:23.915+00:00 [gateway] ready
+2026-09-23T21:54:24.106+00:00 [gateway] starting channels and sidecars...
+2026-09-23T21:54:24.121+00:00 [gateway] agent model: openai/gpt-6-astra (thinking=medium, fast=off)
+2026-09-23T21:54:24.122+00:00 [gateway] http server listening (2 plugins: dgr-gate, memory-core; 2.2s)
+2026-09-23T21:54:24.123+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-09-23.log
+2026-09-23T21:54:24.465+00:00 [gateway/channels] skipping channel start (OPENCLAW_SKIP_CHANNELS=1 or OPENCLAW_SKIP_PROVIDERS=1)
+2026-09-23T21:54:24.545+00:00 [plugins] memory-core: created managed dreaming cron job.
+2026-09-23T21:54:24.549+00:00 [gateway] startup outcomes: internal-hooks=skipped (not-configured); internal-startup-hook=skipped (no-handlers-loaded); gateway-start-hooks=scheduled; gmail-watcher=skipped (hooks-disabled); gmail-model=skipped (not-configured)
+2026-09-23T21:54:24.552+00:00 [heartbeat] started
+2026-09-23T21:54:24.559+00:00 [gateway] ready
+2026-09-23T21:54:24.804+00:00 [admission] closed: stop (SIGTERM)
+2026-09-23T21:54:24.805+00:00 [gateway] received SIGTERM; shutting down
+2026-09-23T21:54:24.807+00:00 [gateway] shutdown budget at shutdown: drain=315000ms shutdown=325000ms reserve=10000ms exitMargin=5000ms; source=Gateway stop policy=330000ms
+2026-09-23T21:54:24.809+00:00 [gateway] draining active work before stop with timeout 315000ms: rootRequests=2
+2026-09-23T21:54:25.080+00:00 [gateway] sidecars.restart-sentinel failed after gateway ready: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:54:25.082+00:00 [main-session-restart-recovery] main-session restart recovery failed: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:54:25.105+00:00 [cron] failed to enter start root: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:54:25.131+00:00 [gateway] restart sentinel refresh failed: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:54:25.134+00:00 [gateway] gateway_start hook failed: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:54:25.144+00:00 [gateway] update check readiness wait failed: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:54:25.315+00:00 [gateway] active-work drain settled; beginning server close
+2026-09-23T21:54:25.362+00:00 [gmail-watcher] gmail watcher stopped
+2026-09-23T21:54:25.423+00:00 [shutdown] completed cleanly in 96ms
 
-✔ packed plugin installs and enforces through real OpenClaw HTTP tool dispatch (20276.199234ms)
+✔ packed plugin installs and enforces through real OpenClaw HTTP tool dispatch (21554.059915ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 1
@@ -279,19 +374,17 @@ GATEWAY_LOG 2026-09-23T20:58:37.520+00:00 [gateway] loading configuration…
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 20335.493389
+ℹ duration_ms 21630.523787
 ```
 
-```sh
-npm pack --dry-run
-```
+### `npm pack --dry-run`
 
 ```text
 npm notice
-npm notice 📦  @dgr-ai-labs/openclaw-sandbox@0.1.0-beta.1
+npm notice 📦  @dgr-ai-labs/openclaw-dgr-gate@0.1.0-beta.2
 npm notice Tarball Contents
 npm notice 11.4kB LICENSE
-npm notice 10.2kB README.md
+npm notice 11.6kB README.md
 npm notice 994B SECURITY.md
 npm notice 1.1kB openclaw.plugin.json
 npm notice 1.2kB package.json
@@ -303,82 +396,61 @@ npm notice 607B src/modules/invoice.js
 npm notice 777B src/modules/payment.js
 npm notice 1.1kB src/records.js
 npm notice Tarball Details
-npm notice name: @dgr-ai-labs/openclaw-sandbox
-npm notice version: 0.1.0-beta.1
-npm notice filename: dgr-ai-labs-openclaw-sandbox-0.1.0-beta.1.tgz
-npm notice package size: 13.5 kB
-npm notice unpacked size: 40.0 kB
-npm notice shasum: 92454421c4028e2108003f7794338273d8ad347c
-npm notice integrity: sha512-VAByAVMCcINyC[...]utQ0p8yXv7HPQ==
+npm notice name: @dgr-ai-labs/openclaw-dgr-gate
+npm notice version: 0.1.0-beta.2
+npm notice filename: dgr-ai-labs-openclaw-dgr-gate-0.1.0-beta.2.tgz
+npm notice package size: 14.0 kB
+npm notice unpacked size: 41.4 kB
+npm notice shasum: c05531b51e80666df15d7f7b49a4f90ce15e355b
+npm notice integrity: sha512-kxCNvi/3NIYop[...]nESBd4NGYYO+A==
 npm notice total files: 12
 npm notice
-dgr-ai-labs-openclaw-sandbox-0.1.0-beta.1.tgz
+dgr-ai-labs-openclaw-dgr-gate-0.1.0-beta.2.tgz
 ```
 
-```sh
-docker build --progress plain -t dgr-openclaw-publication-test .
-```
-
-```text
-#0 building with "default" instance using docker driver
-
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 410B done
-#1 DONE 0.0s
-
-#2 [internal] load metadata for docker.io/library/node:24.21.0-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
-#2 DONE 0.1s
-
-#3 [internal] load .dockerignore
-#3 transferring context: 92B done
-#3 DONE 0.0s
-
-#4 [1/4] FROM docker.io/library/node:24.21.0-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
-#4 resolve docker.io/library/node:24.21.0-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6 0.0s done
-#4 DONE 0.0s
-
-#5 [internal] load build context
-#5 transferring context: 219.47kB 0.1s done
-#5 DONE 0.1s
-
-#6 [2/4] RUN npm install --global --ignore-scripts --omit=optional openclaw@2026.9.5     && openclaw --version
-#6 CACHED
-
-#7 [3/4] WORKDIR /plugin
-#7 CACHED
-
-#8 [4/4] COPY --chown=node:node . .
-#8 DONE 0.4s
-
-#9 exporting to image
-#9 exporting layers
-#9 exporting layers 0.5s done
-#9 exporting manifest sha256:e6afd1647e3a09e5773eda2430e83d1d4414123461029414b76647ccf142cd06 0.0s done
-#9 exporting config sha256:1090f0b4816baeb0592f64f71e58b3566dd170c155645b4c4c1a8fc0b64b4179 0.0s done
-#9 exporting attestation manifest sha256:06aa158b4d47d6328c2019bb5cc43196a036e3cf91a6c463acfa0f518f4ff20b 0.0s done
-#9 exporting manifest list sha256:c26a27f1a271669af72bb1df40b57061d96c2d424b423944cfcbd5ebea6733d0 0.0s done
-#9 naming to docker.io/library/dgr-openclaw-publication-test:latest done
-#9 unpacking to docker.io/library/dgr-openclaw-publication-test:latest
-#9 unpacking to docker.io/library/dgr-openclaw-publication-test:latest 0.3s done
-#9 DONE 0.9s
-```
-
-```sh
-docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-openclaw-publication-test
-```
+### `docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-gate-publication-test`
 
 ```text
 HOST OpenClaw 2026.9.5 (ec9c1a1)
-PACKAGE sha512-VAByAVMCcINyCUzCszrMd09ZQwVjlgc0bUBTdhDj7fGBTyonR6EpHV89fHpB2RYy3D4P9sofFutQ0p8yXv7HPQ==
-WARNING - Installing plugin from local archive: /tmp/dgr-installed-2b8rYh/dgr-ai-labs-openclaw-sandbox-0.1.0-beta.1.tgz
+PACKAGE sha512-SAY4ZJJMO97Y5I1hqmtZy2J5KZIHB04Wwd4scL2EVfWsSzfjfcziKZinwcFeJZZv2l4rOmEBkBa0foh+ZpcrVg==
+WARNING - Installing plugin from local archive: /tmp/dgr-installed-5YVNHk/dgr-ai-labs-openclaw-dgr-gate-0.1.0-beta.2.tgz
 This source is outside ClawHub review and trust metadata. Only continue if you trust the publisher, package contents, and install source.
-Extracting /tmp/dgr-installed-2b8rYh/dgr-ai-labs-openclaw-sandbox-0.1.0-beta.1.tgz…
-Plugin manifest id "dgr-sandbox" differs from npm package name "@dgr-ai-labs/openclaw-sandbox"; using manifest id as the config key.
-Installing to /tmp/dgr-installed-2b8rYh/state/extensions/dgr-sandbox…
-Installed plugin: dgr-sandbox
+Extracting /tmp/dgr-installed-5YVNHk/dgr-ai-labs-openclaw-dgr-gate-0.1.0-beta.2.tgz…
+Plugin manifest id "dgr-gate" differs from npm package name "@dgr-ai-labs/openclaw-dgr-gate"; using manifest id as the config key.
+Installing to /tmp/dgr-installed-5YVNHk/state/extensions/dgr-gate…
+Installed plugin: dgr-gate
 Saved for the next Gateway start.
 
-[... MIDDLE CUT: runtime-inspection JSON ...]
+RUNTIME_INSPECTION {
+  "workspaceDir": "/tmp/dgr-installed-5YVNHk/state/workspace",
+  "plugin": {
+    "id": "dgr-gate",
+    "name": "DGR Gate",
+    "description": "Two policy-controlled synthetic finance tools. Does not govern other OpenClaw tools.",
+    "packageVersion": "0.1.0-beta.2",
+    "version": "0.1.0-beta.2",
+    "builtWithOpenClawVersion": "2026.9.5",
+    "packageName": "@dgr-ai-labs/openclaw-dgr-gate",
+    "format": "openclaw",
+    "source": "/tmp/dgr-installed-5YVNHk/state/extensions/dgr-gate/src/index.js",
+    "rootDir": "/tmp/dgr-installed-5YVNHk/state/extensions/dgr-gate",
+    "origin": "global",
+[... CUT 146 middle lines of runtime inspection ...]
+        "tools: dgr_invoice_attachment",
+        "tools: dgr_sandbox_payment"
+      ],
+      "hooks": [],
+      "mcpServers": [],
+      "cliCommands": [],
+      "cliBackends": [],
+      "skills": [],
+      "dangerousConfigFlags": []
+    },
+    "acceptedSurfaceHash": "a7cc8beb651fa63b44f380bc02ef844064480831cb7b45d7cefc4c645e38acdb",
+    "acceptedSurfaceAt": "2026-09-23T21:51:20.384Z"
+  }
+}
+
 INVOKED dgr_invoice_attachment attach-demo simulated ALLOWED
 INVOKED dgr_sandbox_payment over-limit denied AMOUNT_LIMIT
 INVOKED dgr_sandbox_payment pay-demo simulated ALLOWED
@@ -386,37 +458,36 @@ INVOKED dgr_sandbox_payment pay-demo denied DUPLICATE_ATTEMPT
 INVOKED dgr_sandbox_payment pay-again denied INVOICE_ALREADY_PAID
 INVOKED dgr_invoice_attachment fault-call unavailable STORE_FAILURE
 INVOKED dgr_invoice_attachment latched-call unavailable STORE_UNAVAILABLE
-GATEWAY_LOG 2026-09-23T20:58:57.926+00:00 [gateway] loading configuration…
-2026-09-23T20:58:57.951+00:00 [gateway] resolving authentication…
-2026-09-23T20:58:57.955+00:00 [gateway] starting...
-2026-09-23T20:58:57.980+00:00 [gateway] shutdown budget at startup: drain=315000ms shutdown=325000ms reserve=10000ms exitMargin=5000ms; source=Gateway stop policy=330000ms
-2026-09-23T20:58:58.088+00:00 [gateway] spawn broker ready pid=211
-2026-09-23T20:58:58.964+00:00 [gateway] starting HTTP server...
-2026-09-23T20:58:59.940+00:00 [gateway] ready
-2026-09-23T20:59:00.118+00:00 [gateway] starting channels and sidecars...
-2026-09-23T20:59:00.133+00:00 [gateway] agent model: openai/gpt-6-astra (thinking=medium, fast=off)
-2026-09-23T20:59:00.134+00:00 [gateway] http server listening (2 plugins: dgr-sandbox, memory-core; 2.2s)
-2026-09-23T20:59:00.135+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-09-23.log
-2026-09-23T20:59:00.515+00:00 [gateway/channels] skipping channel start (OPENCLAW_SKIP_CHANNELS=1 or OPENCLAW_SKIP_PROVIDERS=1)
-2026-09-23T20:59:00.598+00:00 [plugins] memory-core: created managed dreaming cron job.
-2026-09-23T20:59:00.601+00:00 [gateway] startup outcomes: internal-hooks=skipped (not-configured); internal-startup-hook=skipped (no-handlers-loaded); gateway-start-hooks=scheduled; gmail-watcher=skipped (hooks-disabled); gmail-model=skipped (not-configured)
-2026-09-23T20:59:00.605+00:00 [heartbeat] started
-2026-09-23T20:59:00.615+00:00 [gateway] ready
-2026-09-23T20:59:00.840+00:00 [admission] closed: stop (SIGTERM)
-2026-09-23T20:59:00.841+00:00 [gateway] received SIGTERM; shutting down
-2026-09-23T20:59:00.842+00:00 [gateway] shutdown budget at shutdown: drain=315000ms shutdown=325000ms reserve=10000ms exitMargin=5000ms; source=Gateway stop policy=330000ms
-2026-09-23T20:59:00.845+00:00 [gateway] draining active work before stop with timeout 315000ms: rootRequests=2
-2026-09-23T20:59:01.145+00:00 [gateway] sidecars.restart-sentinel failed after gateway ready: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:59:01.147+00:00 [main-session-restart-recovery] main-session restart recovery failed: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:59:01.171+00:00 [cron] failed to enter start root: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:59:01.199+00:00 [gateway] restart sentinel refresh failed: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:59:01.201+00:00 [gateway] gateway_start hook failed: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:59:01.212+00:00 [gateway] update check readiness wait failed: GatewayDrainingError: gateway is draining for restart
-2026-09-23T20:59:01.348+00:00 [gateway] active-work drain settled; beginning server close
-2026-09-23T20:59:01.390+00:00 [gmail-watcher] gmail watcher stopped
-2026-09-23T20:59:01.430+00:00 [shutdown] completed cleanly in 52ms
+GATEWAY_LOG 2026-09-23T21:51:32.454+00:00 [gateway] loading configuration…
+2026-09-23T21:51:32.480+00:00 [gateway] resolving authentication…
+2026-09-23T21:51:32.483+00:00 [gateway] starting...
+2026-09-23T21:51:32.508+00:00 [gateway] shutdown budget at startup: drain=315000ms shutdown=325000ms reserve=10000ms exitMargin=5000ms; source=Gateway stop policy=330000ms
+2026-09-23T21:51:32.620+00:00 [gateway] spawn broker ready pid=211
+2026-09-23T21:51:33.648+00:00 [gateway] starting HTTP server...
+2026-09-23T21:51:34.665+00:00 [gateway] ready
+2026-09-23T21:51:34.840+00:00 [gateway] starting channels and sidecars...
+2026-09-23T21:51:34.855+00:00 [gateway] agent model: openai/gpt-6-astra (thinking=medium, fast=off)
+2026-09-23T21:51:34.856+00:00 [gateway] http server listening (2 plugins: dgr-gate, memory-core; 2.3s)
+2026-09-23T21:51:34.857+00:00 [gateway] log file: /tmp/openclaw/openclaw-2026-09-23.log
+2026-09-23T21:51:35.191+00:00 [gateway/channels] skipping channel start (OPENCLAW_SKIP_CHANNELS=1 or OPENCLAW_SKIP_PROVIDERS=1)
+2026-09-23T21:51:35.266+00:00 [plugins] memory-core: created managed dreaming cron job.
+2026-09-23T21:51:35.269+00:00 [gateway] startup outcomes: internal-hooks=skipped (not-configured); internal-startup-hook=skipped (no-handlers-loaded); gateway-start-hooks=scheduled; gmail-watcher=skipped (hooks-disabled); gmail-model=skipped (not-configured)
+2026-09-23T21:51:35.272+00:00 [heartbeat] started
+2026-09-23T21:51:35.280+00:00 [gateway] ready
+2026-09-23T21:51:35.547+00:00 [admission] closed: stop (SIGTERM)
+2026-09-23T21:51:35.547+00:00 [gateway] received SIGTERM; shutting down
+2026-09-23T21:51:35.549+00:00 [gateway] shutdown budget at shutdown: drain=315000ms shutdown=325000ms reserve=10000ms exitMargin=5000ms; source=Gateway stop policy=330000ms
+2026-09-23T21:51:35.552+00:00 [gateway] draining active work before stop with timeout 315000ms: rootRequests=2
+2026-09-23T21:51:35.808+00:00 [gateway] sidecars.restart-sentinel failed after gateway ready: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:51:35.810+00:00 [main-session-restart-recovery] main-session restart recovery failed: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:51:35.833+00:00 [cron] failed to enter start root: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:51:35.860+00:00 [gateway] restart sentinel refresh failed: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:51:35.862+00:00 [gateway] gateway_start hook failed: GatewayDrainingError: gateway is draining for restart
+2026-09-23T21:51:35.867+00:00 [gateway] active-work drain settled; beginning server close
+2026-09-23T21:51:35.894+00:00 [gmail-watcher] gmail watcher stopped
+2026-09-23T21:51:35.939+00:00 [shutdown] completed cleanly in 57ms
 
-✔ packed plugin installs and enforces through real OpenClaw HTTP tool dispatch (19858.319283ms)
+✔ packed plugin installs and enforces through real OpenClaw HTTP tool dispatch (20539.003552ms)
 ℹ tests 1
 ℹ suites 0
 ℹ pass 1
@@ -424,28 +495,46 @@ GATEWAY_LOG 2026-09-23T20:58:57.926+00:00 [gateway] loading configuration…
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 19920.599862
+ℹ duration_ms 20601.017333
 ```
 
-```sh
-npm run check:listing
-```
+### `npm run check:listing`
 
 ```text
 
-> @dgr-ai-labs/openclaw-sandbox@0.1.0-beta.1 check:listing
+> @dgr-ai-labs/openclaw-dgr-gate@0.1.0-beta.2 check:listing
 > node scripts/check-listing.mjs
 
-PASS: tagline, version, license, category, topics, badges, identity, and full README digest agree.
+PASS: summary, version, license, category, topics, badges, identity, contracts, lockfile and full README digest agree.
 ```
 
-### URL resolver output
+### `.github/analyzers/node_modules/.bin/eslint --config .github/analyzers/eslint.config.mjs scripts/check-listing.mjs --max-warnings 0`
 
-Every Markdown URL in README.md and RELEASING.md was fetched with HTTP GET, following redirects. The two 404s are real: files exist locally but have not been integrated into remote main. They are not counted as passes. All links are absolute; repository-file links use /blob/main, while required badge/registry/feedback links use their actual endpoints.
-
-```sh
-HTTP GET every Markdown URL in README.md and RELEASING.md
+```text
 ```
+
+Exit status 0; no output.
+
+### `Supplementary seven-field drift check in disposable copies`
+
+```text
+PASS: summary drift rejected
+PASS: version drift rejected
+PASS: license drift rejected
+PASS: category drift rejected
+PASS: topics drift rejected
+PASS: contracts drift rejected
+PASS: hook drift rejected
+```
+
+### `docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges -v /tmp/dgr-gate-verification:/evidence:ro dgr-gate-publication-test node /evidence/migration.mjs`
+
+```text
+PASS: old-plugin state reused by renamed plugin; duplicate attempt and paid-invoice history survive; one invoice, one payment, four ledger records.
+Scope: real SQLite with mock host registration; not a host configuration-migration test.
+```
+
+### `HTTP resolver: every Markdown URL in README.md and RELEASING.md`
 
 ```text
 200 https://clawhub.ai/api/v1/packages/%40dgr-ai-labs%2Fopenclaw-sandbox
@@ -453,11 +542,12 @@ HTTP GET every Markdown URL in README.md and RELEASING.md
 200 https://docs.openclaw.ai/clawhub/publishing
 200 https://docs.openclaw.ai/plugins
 200 https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/CHANGELOG.md
-404 https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/RELEASING.md
+HTTP Error 404: Not Found https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/RELEASING.md
 200 https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/analyzer-evidence.md
 200 https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/architecture.md
-404 https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/policies.md
+HTTP Error 404: Not Found https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/policies.md
 200 https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/release-review.md
+200 https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/templates/use-case/README.md
 200 https://github.com/DGR-AI-Labs/dgr-openclaw/discussions
 200 https://github.com/DGR-AI-Labs/dgr-openclaw/issues/new/choose
 200 https://github.com/DGR-AI-Labs/dgr-openclaw/releases/tag/v0.1.0-beta.1
@@ -465,37 +555,37 @@ HTTP GET every Markdown URL in README.md and RELEASING.md
 200 https://github.com/DGR-AI-Labs/dgr-openclaw/workflows/Analyzer%20evidence/badge.svg
 200 https://github.com/DGR-AI-Labs/dgr-openclaw/workflows/Sandbox%20checks/badge.svg
 200 https://img.shields.io/badge/license-Apache--2.0-blue
-200 https://img.shields.io/badge/version-0.1.0--beta.1-blue
+200 https://img.shields.io/badge/version-0.1.0--beta.2-blue
 ```
 
-```sh
-HTTP GET old README URLs not present in the new pair
-```
+### `npm exec --yes --package=clawhub@0.23.3 -- clawhub package publish . --family code-plugin --owner dgr-ai-labs --tags beta --topics agent-safety,policy-enforcement,fail-closed,audit-trail,tool-gating --dry-run`
 
 ```text
-200 https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/CONTRIBUTING.md
-200 https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/templates/use-case/README.md
+Dry run - nothing will be published.
+
+Source:    github:DGR-AI-Labs/dgr-openclaw@docs/publication-accuracy
+Family:    code-plugin
+Name:      @dgr-ai-labs/openclaw-dgr-gate
+Display:   DGR Gate
+Version:   0.1.0-beta.2
+Commit:    75dd94fda3258916115dfaf5b22a807effb6ead1
+Compat:    pluginApi=>=2026.9.5 <2026.9.6, builtWith=2026.9.5, sdk=2026.9.5, minGateway=2026.9.5
+Files:     12 files (40.4 KB)
+Tags:      beta
+
+Files:
+  LICENSE                      11.1 KB
+  src/actions.js               1.8 KB
+  src/config.js                2.1 KB
+  src/gate.js                  6.5 KB
+  src/index.js                 1.9 KB
+  src/modules/invoice.js       607 B
+  src/modules/payment.js       777 B
+  src/records.js               1.0 KB
+  openclaw.plugin.json         1.1 KB
+  package.json                 1.2 KB
+  README.md                    11.3 KB
+  SECURITY.md                  994 B
 ```
 
-### Claim-discipline review
-
-| Forbidden item | Disposition |
-| --- | --- |
-| Operator-proof implication | PASS: README opening and limitations explicitly permit operator changes/bypass. |
-| Tamper-proof / immutable / audit-grade language | PASS: none appears in the new README; self-consistency-only is explicit. |
-| Governing unrelated tools | PASS: hook and limitations name the two-tool scope. |
-| Cedar / Ed25519 / capability tokens / before_tool_call / out-of-process gating | PASS: no such implementation is claimed in README. |
-| Latency figure | PASS: 1000 ms is explicitly an admission rule, not call completion time. |
-| Present-tense cross-action governance | PASS: Why this exists marks it as future work. |
-| Model chooses whether gate runs | PASS: gate is inside the effect-owning tools and does not depend on model consultation. |
-| Unpublished / no registry installation | PASS: removed from current copy; required stale sentence deleted from historical log. |
-| Provenance implication | PASS: hasProvenance false and source-linked/artifact-only are explicit. |
-| Unqualified clean registry verdict | PASS: exact version-clean/benign versus package-pending qualifier and separate evidence links. |
-
-Additional checks: README transcript matches all seven fresh INVOKED lines; README is 147 lines; all three policy presets validate and produce their stated amount/destination/attachment refusals; six isolated negative drift cases (tagline, version, license, category, topics, listing) are rejected; checker passes ESLint; historical block equality verified after the required sentence deletion. These are local checks, not a new CI result.
-
-### NOT ESTABLISHED / omitted
-
-Dedicated listing homepage/license/screenshots/permissions fields and undocumented length limits; exact GitHub About length limit; default host's absolute state path; database deletion by uninstall; dependency-wide assurance; stronger provenance upgrade outcome; bare catalog installation with latestVersion null. The zero-src comparison against current main and two live links remain pending prerequisite integration and publication of this branch. All are disclosed instead of silently invented or repaired through unauthorized actions.
-
-**BUNDLE COMPLETE WITH OMISSIONS**
+**BUNDLE COMPLETE WITH OMISSIONS** — release and registry verification, pending-main links, and unestablished optional fields listed above.
