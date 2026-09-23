@@ -38,6 +38,9 @@ class EvidenceChecks(unittest.TestCase):
         run = {'tool': {'driver': {'rules': [{'id': 'test'}]}},
                'invocations': [{'executionSuccessful': True}], 'results': []}
         self.check_report('codeql', {'runs': [run]}, False)
+        extension_run = {**run, 'tool': {'driver': {'rules': []}, 'extensions': [
+            {'name': 'codeql/javascript-queries', 'rules': [{'id': 'test'}]}]}}
+        self.check_report('codeql', {'runs': [extension_run]}, False)
         self.check_report('codeql', {'runs': []}, True)
         for change in ({'invocations': [{'executionSuccessful': False}]},
                        {'results': [{'ruleId': 'unsafe'}]}, {'tool': {}}):

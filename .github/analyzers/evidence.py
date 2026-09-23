@@ -55,7 +55,9 @@ def verify(kind, path):
         if not runs:
             raise ValueError('Missing CodeQL SARIF runs')
         for run in runs:
-            if not run.get('tool', {}).get('driver', {}).get('rules'):
+            tool = run.get('tool', {})
+            components = [tool.get('driver', {}), *tool.get('extensions', [])]
+            if not any(component.get('rules') for component in components):
                 raise ValueError('Missing CodeQL rule inventory')
             if run.get('results'):
                 raise ValueError('CodeQL findings require disposition')
