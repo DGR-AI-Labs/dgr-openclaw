@@ -1,17 +1,19 @@
-# Releasing DGR Sandbox
+# Releasing DGR Gate
 
 ## Current release facts and listing sync
 
-The beta is published. Its [release record](https://github.com/DGR-AI-Labs/dgr-openclaw/releases/tag/v0.1.0-beta.1) retains human acceptance and registry-installation evidence for 4cec6796a4f0a08a0c5f1d817d1e1f9321a333c7. This checkout adds a later constants refactor and documentation; the published artifact does not contain those changes.
+The old `@dgr-ai-labs/openclaw-sandbox@0.1.0-beta.1` is published. The renamed `@dgr-ai-labs/openclaw-dgr-gate@0.1.0-beta.2` is the next, unpublished candidate. Its [release record](https://github.com/DGR-AI-Labs/dgr-openclaw/releases/tag/v0.1.0-beta.1) retains human acceptance and registry-installation evidence for 4cec6796a4f0a08a0c5f1d817d1e1f9321a333c7. This checkout adds a later constants refactor, identity rename and documentation; the published artifact does not contain those changes.
 
 README.md is authoritative for public scope and copy; package.json and openclaw.plugin.json define identity, compatibility and declared contracts. docs/clawhub-listing.md is the field map derived from that README, not a second description to upload.
 
 1. Update README and package description together. Run `npm run check:listing -- --write`, inspect the generated table, then run `npm run check:listing`. README and listing must ship in the same commit. Keep the operator-bypass and own-tools limits in the full README that ClawHub renders.
-2. The existing version 0.1.0-beta.1 cannot be replaced with changed bytes. The founder must choose a new version and separately authorize edits to both manifests; that is outside this bundle. Update README metadata, badges and listing in the same release commit.
+2. Publish the approved candidate as `@dgr-ai-labs/openclaw-dgr-gate@0.1.0-beta.2`, runtime ID `dgr-gate`, display name DGR Gate. Both manifests and the lockfile carry beta.2. Do not overwrite old beta.1 bytes or claim its registry scans apply to this candidate. The new README reaches ClawHub only when the new artifact is published. Keep version badges and listing in the same release commit.
 3. Complete required review and checks, select a clean commit available in the source repository, and inspect the package allowlist. Preserve `private: true`; no npm publication is intended.
-4. In an already-authorized session, preview the exact checkout with `clawhub package publish . --family code-plugin --owner dgr-ai-labs --tags beta --dry-run`. Check the resolved commit, version and files. No authentication or publication is performed by this documentation task.
-5. Founder publication order: source commit containing README and listing, successful preview, explicit publication of that same candidate, completed registry review, fresh pinned installation, then announcement. Keep beta tags explicit. Retain reports and archive digests with the release.
+4. In an already-authorized session, preview the exact checkout with `clawhub package publish . --family code-plugin --owner dgr-ai-labs --tags beta --topics agent-safety,policy-enforcement,fail-closed,audit-trail,tool-gating --dry-run`. Check the resolved commit, version and files. No authentication or publication is performed by this documentation task.
+5. Founder publication order: source commit containing README and listing, successful preview, explicit publication of that same candidate with the same owner, family, beta tag and five topics, completed registry review, fresh pinned installation, then announcement. Keep beta tags explicit. Retain reports and archive digests with the release.
 6. Inspect both version and package-level scan statuses. Do not strengthen the scan claim while their discrepancy remains. Record actual provenance fields rather than treating source linkage as an attestation.
+
+Before publishing, confirm access to the existing `dgr-ai-labs` namespace and availability of the new package identity. No new account or namespace is needed or created by this task. Stop the Gateway, preserve `dgr-sandbox/sandbox.sqlite`, remove the old plugin and migrate the config/allowlist ID to `dgr-gate` when upgrading; never load both identities together. Tool names and database format/path remain unchanged. Test fresh installation and existing-state migration before announcing. Set the approved GitHub About line only after integration.
 
 The historical text below is moved verbatim from the old README except for deleting its stale sentence claiming no registry installation. It describes earlier checks, not the current availability of the beta. Commands below are historical instructions, not authorization for this agent to authenticate or publish.
 

@@ -7,22 +7,27 @@ const read = name => readFileSync(new URL(name, root), 'utf8').replaceAll('\r\n'
 try {
   assert.ok(process.argv.slice(2).every(arg => arg === '--write'), 'Only --write is supported');
   const pkg = JSON.parse(read('package.json'));
+  const lock = JSON.parse(read('package-lock.json'));
   const manifest = JSON.parse(read('openclaw.plugin.json'));
   const readme = read('README.md');
-  const hook = readme.split('\n')[2];
+  const listing = read('docs/clawhub-listing.md');
   const value = label => {
-    const match = readme.match(new RegExp(label + ': `([^`]+)`'));
-    assert.ok(match, `README missing ${label}`);
+    const match = listing.match(new RegExp(label + ': `([^`]+)`'));
+    assert.ok(match, `Listing missing ${label}`);
     return match[1];
   };
-  assert.equal(hook, pkg.description, 'README hook/package description mismatch');
-  assert.equal(value('Version'), pkg.version, 'README/package version mismatch');
-  assert.equal(value('Version'), manifest.version, 'README/manifest version mismatch');
-  assert.equal(value('License'), pkg.license, 'README/package license mismatch');
-  assert.deepEqual([value('Category')], manifest.categories, 'README/manifest category mismatch');
-  assert.equal(value('Display name'), manifest.name, 'Display name mismatch');
-  assert.equal('git+' + value('Repository') + '.git', pkg.repository.url, 'Repository mismatch');
+  const hook = readme.split('\n\n').slice(1, 3).join('\n\n');
+  assert.ok(hook.includes(pkg.description), 'README opening/package summary mismatch');
+  assert.equal(pkg.version, manifest.version, 'Package/manifest version mismatch');
+  for (const entry of [lock, lock.packages['']]) {
+    assert.equal(entry.name, pkg.name, 'Lockfile name mismatch');
+    assert.equal(entry.version, pkg.version, 'Lockfile version mismatch');
+  }
+  assert.ok(readme.startsWith('# ' + manifest.name + ' for OpenClaw\n'), 'Display name mismatch');
+  assert.ok(readme.includes('clawhub:' + pkg.name + '@' + pkg.version), 'Pinned install mismatch');
+  assert.ok(readme.includes('`' + manifest.id + '`'), 'Runtime ID missing');
   for (const tool of manifest.contracts.tools) assert.ok(readme.includes('`' + tool + '`'), `Missing tool ${tool}`);
+  assert.ok(listing.includes('The exact manifest contracts are `' + JSON.stringify(manifest.contracts) + '`'), 'Manifest contracts drift');
   const topics = JSON.parse(value('Proposed discovery topics'));
   assert.ok(Array.isArray(topics) && topics.length <= 5, 'At most five topics');
   assert.ok(topics.every(t => typeof t === 'string' && t.length > 0 && t.length <= 48 && !/[\p{Cc}\p{Cf}]/u.test(t)), 'Topic length/characters invalid');
@@ -30,26 +35,25 @@ try {
   assert.ok(readme.includes('![Version](https://img.shields.io/badge/version-' + pkg.version.replaceAll('-', '--') + '-blue)'), 'Version badge drift');
   assert.ok(readme.includes('![License](https://img.shields.io/badge/license-' + pkg.license.replaceAll('-', '--') + '-blue)'), 'License badge drift');
   const fields = [
-    ['name', pkg.name, 'Install (literal scoped package name)'],
-    ['displayName', value('Display name'), 'Package metadata and authorship'],
-    ['summary', hook, 'Opening hook; package.json description'],
-    ['readme', 'README.md; sha256:' + createHash('sha256').update(readme).digest('hex'), 'Entire README, including limits and scan qualifier'],
-    ['family', value('Family'), 'Package metadata and authorship'],
-    ['version', value('Version'), 'Package metadata and authorship'],
-    ['license (README only)', value('License'), 'Package metadata and authorship; not a dedicated registry field'],
-    ['categories', [value('Category')], 'Package metadata and authorship'],
-    ['topics', topics, 'Package metadata and authorship; proposed, not asserted remote state'],
-    ['distTags', [value('Release tag')], 'Package metadata and authorship'],
-    ['sourceRepo', value('Repository'), 'Package metadata and authorship'],
+    ['name', pkg.name, 'Install; package.json name'],
+    ['displayName', manifest.name, 'Title; openclaw.plugin.json name'],
+    ['summary', pkg.description, 'Opening scope paragraph; package.json description'],
+    ['readme', 'README.md; sha256:' + createHash('sha256').update(readme).digest('hex'), 'Entire README, including opening hook, limits and scan qualifier'],
+    ['family', value('Family'), 'Listing release input; plugin implementation described in README'],
+    ['version', pkg.version, 'Version badge and Install; both manifests and lockfile'],
+    ['license (README only)', pkg.license, 'License badge; package.json license; no dedicated registry field established'],
+    ['categories', manifest.categories, 'openclaw.plugin.json categories; listing metadata, no separate README block'],
+    ['topics', topics, 'Founder-approved labels for What it does and Results and reasons; listing release input'],
+    ['distTags', [value('Release tag')], 'Install beta qualifier; listing release input'],
+    ['sourceRepo', pkg.repository.url.replace(/^git\+/, '').replace(/\.git$/, ''), 'README repository links; package.json repository'],
   ];
-  const generated = '| Field | Exact copy/value | README source |\n| --- | --- | --- |\n' + fields.map(([k,v,s]) => `| ${k} | \`${JSON.stringify(v)}\` | ${s} |`).join('\n');
+  const generated = '| Field | Exact copy/value | README / defining source |\n| --- | --- | --- |\n' + fields.map(([k,v,s]) => `| ${k} | \`${JSON.stringify(v)}\` | ${s} |`).join('\n');
   const pattern = /<!-- fields:start -->\n[\s\S]*?\n<!-- fields:end -->/;
-  const listing = read('docs/clawhub-listing.md');
   assert.ok(pattern.test(listing), 'Missing listing markers');
   const expected = '<!-- fields:start -->\n' + generated + '\n<!-- fields:end -->';
   if (process.argv.includes('--write')) {
     writeFileSync(fileURLToPath(new URL('docs/clawhub-listing.md', root)), listing.replace(pattern, () => expected));
-    console.log('Updated listing table from checked README metadata.');
-  } else assert.equal(listing.match(pattern)[0], expected, 'Listing drift: review README and run npm run check:listing -- --write');
-  console.log('PASS: tagline, version, license, category, topics, badges, identity, and full README digest agree.');
+    console.log('Updated listing table from README, manifests and reviewed release inputs.');
+  } else assert.equal(listing.match(pattern)[0], expected, 'Listing drift: review sources and run npm run check:listing -- --write');
+  console.log('PASS: summary, version, license, category, topics, badges, identity, contracts, lockfile and full README digest agree.');
 } catch (error) { console.error('FAIL: ' + error.message); process.exitCode = 1; }

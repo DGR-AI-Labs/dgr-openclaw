@@ -37,8 +37,8 @@ Derived implementation HEAD: `9a6ba64faf7bb400cea5b8b721c5e094fd1b4dac`. Old REA
 ## Additional discrepancies and omissions
 
 - GitHub About “Pre-implementation” is false: `src/index.js:18` registers actual tools; `src/gate.js:80–82` records synthetic effects. “No production enforcement claim” remains appropriate. Proposed copy is in GITHUB_ABOUT.md; the setting was not edited.
-- The required bare catalog command is retained first, but current `package.latestVersion = null` does not establish an installable default. The README supplies an explicit beta command rather than asserting bare-command success.
-- A literal zero-src diff against main is not attainable on the current stacked branch: the founder-requested prerequisite commit changes src. Bundle-only comparison to 9a6ba64 is the scope audit; both diffs are recorded, never relabeled.
+- The amended README leads with the pinned new release command, explicitly conditional on publication. For the old package, current `package.latestVersion = null` does not establish an installable default. The README supplies an explicit beta command rather than asserting bare-command success.
+- A literal zero-src diff against main is not attainable on the current stacked branch: the founder-requested prerequisite commit changes src. Amended docs-only comparison to rename commit 184e59c is the scope audit; both diffs are recorded, never relabeled.
 - README file links use absolute /blob/main URLs. Badge, registry evidence, release and feedback URLs cannot use /blob/main while pointing to their required targets; this is a necessary distinction, not a silent rewrite of the requested badge URLs.
 - New RELEASING.md and docs/policies.md links point to future main files; live resolution failures are recorded below. No push is authorized to resolve them.
 - The phrase “no real funds or files” would conceal local SQLite writes (`src/index.js:25`; `src/gate.js:36,80–82`), so copy states no real funds, caller-selected file writes or uploads, while disclosing the database.
@@ -52,3 +52,12 @@ Derived implementation HEAD: `9a6ba64faf7bb400cea5b8b721c5e094fd1b4dac`. Old REA
 ## Link audit
 
 The raw resolver output for every README/RELEASING Markdown URL is included in PR_BODY.md. Existing old README links were already absolute; the new-file /blob/main links are pending founder integration. Any other HTTP or transport failure is reported as a gap, not silently counted as passed.
+
+## Founder-approved amendment
+
+- Identity is DGR Gate / `dgr-gate` / `@dgr-ai-labs/openclaw-dgr-gate` (`openclaw.plugin.json:2–3`, `package.json:2`, `src/index.js:7`). Separate rename commit `184e59c` precedes the docs commits; only registration identity and installed-host fixture IDs change in runtime/test code.
+- Candidate `0.1.0-beta.2` is in `package.json:3`, `openclaw.plugin.json:4` and both lockfile entries. Old beta.1 is a different artifact and identity; publishing the new artifact is necessary for ClawHub to render its README.
+- Unknown fields are generically rejected by `src/actions.js:7–11`; there is no special self-attestation detector. Payment uses stored invoice state (`src/gate.js:71`), while attachment creates it (:80). The approved hook and description are qualified accordingly.
+- The approved “no real files” wording is narrowed to no caller-selected file writes: `src/index.js:25` opens local SQLite. State path, tools, format strings and reason precedence remain unchanged.
+- Five founder-selected discovery topics and category metadata live in `docs/clawhub-listing.md`; they do not add capabilities. The summary is copied verbatim into the README opening and the checker binds the entire README with SHA-256.
+- “Apply this to your case” explicitly describes proposals, not available payout, messaging, credential or destructive-file integrations.

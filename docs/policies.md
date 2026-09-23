@@ -1,6 +1,6 @@
 # Synthetic sandbox policy examples
 
-These examples change only the three keys defined in `src/config.js:6–9` and validated at `src/config.js:19–36`. Paste an object into `plugins.entries.dgr-sandbox.config`, keeping other configuration. Restart the selected Gateway after a policy change. They are proposed examples, not additional built-in presets.
+These examples change only the three keys defined in `src/config.js:6–9` and validated at `src/config.js:19–36`. Paste an object into `plugins.entries.dgr-gate.config`, keeping other configuration. Restart the selected Gateway after a policy change. They are proposed examples, not additional built-in presets.
 
 The schema declares `maxPaymentMinor` integer 1–1000000, default 1000; `maxAttachmentBytes` integer 1–262144, default 4096; `allowedDestinations` a unique array of 1–32 strings matching `^[A-Za-z0-9_-]{1,64}$`, default `["sandbox-vendor"]`. Unknown keys throw `DGR configuration must contain only documented policy fields.` (`src/config.js:20–21`). Invalid values throw `DGR configuration has invalid limits or destinations.` (:26–32).
 
@@ -30,4 +30,4 @@ A 100001-cent payment yields `AMOUNT_LIMIT`; a within-cap payment to `other` yie
 
 ## Rules shared by all three
 
-A valid within-policy payment without a stored invoice yields `INVOICE_REQUIRED` (`src/gate.js:71`). Reusing a call ID yields `DUPLICATE_ATTEMPT` (:65–66); a new attempt for a paid invoice yields `INVOICE_ALREADY_PAID` (:72); another attachment for the same ID yields `INVOICE_ALREADY_ATTACHED` (:74). An extra `trustedEvidence` field yields `INVALID_ACTION` (`src/actions.js:7–11`; `test/gate.test.js:36–42`). Amounts are USD cents, not a daily cap. Invoice content is synthetic evidence, not human approval. Store failures and ambiguous commits retain the behaviors in README; no preset makes the operator subject to the gate.
+A valid within-policy payment without a stored invoice yields `INVOICE_REQUIRED` (`src/gate.js:71`). Reusing a call ID yields `DUPLICATE_ATTEMPT` (:65–66); a new attempt for a paid invoice yields `INVOICE_ALREADY_PAID` (:72); another attachment for the same ID yields `INVOICE_ALREADY_ATTACHED` (:74). Every unknown input field is refused by the closed schema; `trustedEvidence` is one example, not a special self-attestation detector. That extra field yields `INVALID_ACTION` (`src/actions.js:7–11`; `test/gate.test.js:36–42`). Amounts are USD cents, not a daily cap. Invoice content is synthetic evidence, not human approval. Store failures and ambiguous commits retain the behaviors in README; no preset makes the operator subject to the gate.
