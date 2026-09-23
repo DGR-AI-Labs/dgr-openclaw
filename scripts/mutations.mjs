@@ -9,7 +9,7 @@ const mutants = [
   ['invoice-evidence', "!this.#db.prepare('SELECT id FROM invoices WHERE id=?').get(action.invoiceId)", 'false'],
   ['attachment-limit', 'action.byteLength > this.#policy.maxAttachmentBytes', 'false'],
   ['fault-latch', 'if (this.#unavailable) return', 'if (false) return'],
-  ['invoice-replay-reason', "reason = 'INVOICE_ALREADY_PAID'", "reason = 'ALLOWED'"],
+  ['invoice-replay-reason', 'reason = REASONS.INVOICE_ALREADY_PAID', 'reason = REASONS.ALLOWED'],
 ];
 function run(root) {
   return spawnSync(process.execPath, ['--test', 'test/gate.test.js'], { cwd: root, encoding: 'utf8', timeout: 30000 });

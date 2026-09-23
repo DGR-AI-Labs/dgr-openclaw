@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { configSchema, parseConfig } from './config.js';
 import { modules } from './actions.js';
-import { SandboxGate } from './gate.js';
+import { SandboxGate, STATUS, REASONS } from './gate.js';
 
 export default {
   id: 'dgr-gate', name: 'DGR Gate',
@@ -19,7 +19,7 @@ export default {
       name: module.name, label: module.name, description: module.description, parameters: module.parameters,
       async execute(callId, input) {
         let result;
-        if (unavailable) result = { status: 'unavailable', reason: 'STORE_UNAVAILABLE', sandbox: true, recorded: false };
+        if (unavailable) result = { status: STATUS.UNAVAILABLE, reason: REASONS.STORE_UNAVAILABLE, sandbox: true, recorded: false };
         else {
           try {
             gate ??= new SandboxGate(join(stateRoot, 'dgr-sandbox', 'sandbox.sqlite'), config);
@@ -27,7 +27,7 @@ export default {
             if (['unavailable', 'uncertain'].includes(result.status)) unavailable = true;
           } catch {
             unavailable = true;
-            result = { status: 'unavailable', reason: 'STORE_UNAVAILABLE', sandbox: true, recorded: false };
+            result = { status: STATUS.UNAVAILABLE, reason: REASONS.STORE_UNAVAILABLE, sandbox: true, recorded: false };
           }
         }
         return { content: [{ type: 'text', text: JSON.stringify(result) }], details: result,
