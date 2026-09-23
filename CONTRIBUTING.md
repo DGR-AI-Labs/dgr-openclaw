@@ -8,7 +8,7 @@ Use normal source modules in this repository, not Git submodules. Each module de
 
 Expected source touchpoints are the module definition, explicit action validation/canonicalization, shared policy/effect handling, plugin manifest, configuration, documentation and tests. Changing one without the others is incomplete. This is not yet a stable third-party SDK.
 
-Run `npm test`, `npm run test:mutations`, `npm run package:check` and the Docker installed-host suite. Tests must establish allowed and denied outcomes by inspecting effects, not just returned messages. Cover malformed input, exact limit boundaries, missing evidence, replay, changed payloads, database failures and uncertain outcomes. Use synthetic fixtures only.
+Run `npm test`, `npm run test:mutations`, `npm run package:check` and the Docker installed-host suite. The separate **Analyzer evidence** workflow must also pass; see [report scope and review instructions](docs/analyzer-evidence.md). Tests must establish allowed and denied outcomes by inspecting effects, not just returned messages. Cover malformed input, exact limit boundaries, missing evidence, replay, changed payloads, database failures and uncertain outcomes. Use synthetic fixtures only.
 
 Changes require maintainer scope agreement and review appropriate to their consequence. Enforcement changes require independent human review, required analyses and adversarial evidence. Disclose actual human/agent authorship. Do not claim a review or independent rerun you did not perform. The founder approves release; a contributor does not approve their own enforcement change.
 

@@ -1,0 +1,3 @@
+# Include synthetic tests in the scan instead of Semgrep's default test exclusions.
+!test/
+!test/**

@@ -56,6 +56,8 @@ test('packed plugin installs and enforces through real OpenClaw HTTP tool dispat
       const body = await response.json();
       assert.equal(response.status, 200, JSON.stringify(body));
       assert.equal(body.ok, true, JSON.stringify(body));
+      // JSON.stringify above formats assertion messages; content[0] is a fixed array index, not a generated key.
+      // nosemgrep: no-stringify-keys
       const result = body.result.details ?? JSON.parse(body.result.content[0].text);
       console.log('INVOKED', tool, id, result.status, result.reason);
       return result;

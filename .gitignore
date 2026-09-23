@@ -4,3 +4,5 @@ node_modules/
 coverage/
 evidence/
 .env*
+reports/
+__pycache__/
