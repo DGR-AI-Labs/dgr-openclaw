@@ -1,9 +1,9 @@
 {
   "name": "@dgr-ai-labs/openclaw-dgr-gate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
-  "description": "A decision gate for two synthetic OpenClaw finance tools: payments require stored invoice evidence; both tools check policy, record decisions, and fail closed.",
+  "description": "A deterministic gate for agent actions: nothing runs outside policy or off the record, and an action it cannot clear fails closed. Payments also require stored evidence. Two synthetic sandbox tools in this release.",
   "license": "Apache-2.0",
   "engines": {
     "node": ">=24.16.0 <25"

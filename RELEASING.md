@@ -15,11 +15,22 @@ README.md is authoritative for public scope and copy; package.json and openclaw.
 5. Founder publication order: source commit containing README and listing, successful preview, explicit publication of that same candidate with the same owner, family, latest tag and five topics, completed registry review, fresh pinned installation, then announcement. Keep historical beta tags on their existing releases. Retain reports and archive digests with the release.
 6. Inspect both version and package-level scan statuses. Do not strengthen the scan claim while their discrepancy remains. Record actual provenance fields rather than treating source linkage as an attestation.
 
-Before publishing, confirm access to the existing `dgr-ai-labs` namespace and that version `0.1.0` is available under the existing package identity. No new account or namespace is needed or created by this task. Stop the Gateway, preserve `dgr-sandbox/sandbox.sqlite`, remove the old plugin and migrate the config/allowlist ID to `dgr-gate` when upgrading; never load both identities together. Tool names and database format/path remain unchanged. Test fresh installation and existing-state migration before announcing. Set the approved GitHub About line only after integration.
+Before publishing, confirm access to the existing `dgr-ai-labs` namespace and that version `0.1.1` is available under the existing package identity. No new account or namespace is needed or created by this task. Stop the Gateway, preserve `dgr-sandbox/sandbox.sqlite`, remove the old plugin and migrate the config/allowlist ID to `dgr-gate` when upgrading; never load both identities together. Tool names and database format/path remain unchanged. Test fresh installation and existing-state migration before announcing. Set the approved GitHub About line only after integration.
+
+## README remediation checks before the next release
+
+The published `0.1.0` tag resolves to `9c46d5a8c3711da6d1909a7c565329fedc750217`. The content-only remediation was committed without a version change; the separately authorized publication step selects `0.1.1`. Do not overwrite the published 0.1.0 artifact.
+
+- Run `wc -l README.md`: at most 130 lines. This is an editorial budget, not a verified ClawHub pixel/collapse threshold; inspect the actual listing after publication.
+- Run `npm run check:listing`: the reviewed hook/description pairing must agree, and the package description must not occur verbatim in README.md. Keep the two-tool scope explicit in both surfaces.
+- Registry copy must cite this package's exact published version. Re-run package and version `clawhub package inspect` and distinguish `package.scanStatus` from `version.verification.scanStatus`; no predecessor's scan establishes this package's result.
+- Rebuild the icon twice and compare hashes. `npm pack --dry-run` must include both README.md and assets/icon.png.
+- HTTP GET every README URL against main before tagging, including migration, reasons and local-demo guides. New main-branch links will not resolve until these docs are merged. Check all four credit logins without rewriting founder-supplied entries.
+- Verify the heading order and unchanged limitations. Review credit wording as acknowledgement, never certification. Preserve the admission-deadline qualification and uncertain-result warning.
 
 ## Required source, artifact and catalog checks
 
-Before tagging 0.1.0, finish review and merge the icon, README and listing changes into main. The existing docs/release-review.md is historical beta.1 evidence, not acceptance of this new release. Obtain review and analyzer evidence for the final source. Source/runtime behavior is unchanged, but the new artifact and default channel still need release acceptance.
+Before tagging 0.1.1, finish review and merge the icon, README and listing changes into main. The existing docs/release-review.md is historical beta.1 evidence, not acceptance of this new release. Obtain review and analyzer evidence for the final source. Source/runtime behavior is unchanged, but the new artifact and default channel still need release acceptance.
 
 Run this pre-tag checklist from a clean checkout of the final main commit:
 
@@ -32,7 +43,7 @@ icon_before=$(sha256sum assets/icon.png | cut -d ' ' -f 1)
 npm run build-icon
 icon_after=$(sha256sum assets/icon.png | cut -d ' ' -f 1)
 test "$icon_before" = "$icon_after"
-node --input-type=module -e 'import fs from "node:fs"; import assert from "node:assert/strict"; const p=JSON.parse(fs.readFileSync("package.json")); const m=JSON.parse(fs.readFileSync("openclaw.plugin.json")); assert.equal(p.version,"0.1.0"); assert.equal(m.version,p.version); assert.equal(p.private,true);'
+node --input-type=module -e 'import fs from "node:fs"; import assert from "node:assert/strict"; const p=JSON.parse(fs.readFileSync("package.json")); const m=JSON.parse(fs.readFileSync("openclaw.plugin.json")); assert.equal(p.version,"0.1.1"); assert.equal(m.version,p.version); assert.equal(p.private,true);'
 npm run check:listing
 npm run package:check
 npm pack --dry-run
@@ -44,9 +55,9 @@ The pack output must contain both README.md and assets/icon.png. Resolve every a
 Only after those checks and founder release authorization, run these tag and preview commands. They are documentation here, not actions taken by release preparation:
 
 ```sh
-release_version=0.1.0
-release_tag=v0.1.0
-git tag -a "$release_tag" -m 'DGR Gate 0.1.0'
+release_version=0.1.1
+release_tag=v0.1.1
+git tag -a "$release_tag" -m 'DGR Gate 0.1.1'
 test "$(git rev-parse HEAD)" = "$(git rev-parse "$release_tag^{commit}")"
 test "$(git rev-parse HEAD:README.md)" = "$(git rev-parse "$release_tag:README.md")"
 git show "$release_tag:README.md" | head -7
@@ -59,7 +70,7 @@ Confirm the remote tag resolves to the reviewed commit and the preview agrees on
 Exact founder publication command, after approval of the preview:
 
 ```sh
-clawhub package publish . --family code-plugin --owner dgr-ai-labs --tags latest --topics agent-safety,policy-enforcement,fail-closed,audit-trail,tool-gating --source-ref v0.1.0 --wait --wait-timeout 120
+clawhub package publish . --family code-plugin --owner dgr-ai-labs --tags latest --topics agent-safety,policy-enforcement,fail-closed,audit-trail,tool-gating --source-ref v0.1.1 --wait --wait-timeout 120
 ```
 
 After publishing, verify both plain and version-pinned installation in disposable profiles. Inspect the exact version and compare every returned file hash to the release checkout. Check both package and version verification fields. Then compare the default README endpoint with the pinned endpoint (substitute the released version):
@@ -72,7 +83,7 @@ curl --fail --get 'https://clawhub.ai/api/v1/packages/%40dgr-ai-labs%2Fopenclaw-
 
 Inspect the public page as well. A successful pinned request plus `Version not found` on the default request indicates version-selection failure: report it separately from publication success and do not claim the listing is complete. Waiting or republishing identical content under another beta is not an established remedy. An upstream renderer fallback to a published beta would preserve beta-only distribution; the selected 0.1.0 release explicitly authorizes latest as its target channel, but successful default resolution must still be observed after publication.
 
-All five stored topics may be correct even when the detail header shows four. The 0.1.0 archive must include the generated assets/icon.png; verify its icon actually renders after publication. The registry PNG size limit is 512 KiB; registry dimension limits remain NOT ESTABLISHED. Do not treat the absence of an unconfirmed dedicated license field as missing package metadata.
+All five stored topics may be correct even when the detail header shows four. The 0.1.1 archive must include the generated assets/icon.png; verify its icon actually renders after publication. The registry PNG size limit is 512 KiB; registry dimension limits remain NOT ESTABLISHED. Do not treat the absence of an unconfirmed dedicated license field as missing package metadata.
 
 The historical text below is moved verbatim from the old README except for deleting its stale sentence claiming no registry installation. It describes earlier checks, not the current availability of the beta. Commands below are historical instructions, not authorization for this agent to authenticate or publish.
 

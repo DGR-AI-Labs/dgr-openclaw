@@ -1,8 +1,13 @@
 # Changelog
 
-## 0.1.0 — prepared, not yet published
+## 0.1.1 — prepared, not yet published
 
-The following release note applies when the founder publishes this version with the `latest` distribution tag:
+- Aligns the listing with the approved description and shortens the README.
+- Updates Credits and published-release evidence; retains scope limitations.
+- Adds migration, reason-code and local-demo guides and stronger listing drift checks.
+- No runtime changes.
+
+## 0.1.0 — published
 
 **0.1.0** — First non-prerelease. Adds a bundled listing icon. No behavior
 change: the gate, policy fields, reason codes, and two-tool scope are unchanged
