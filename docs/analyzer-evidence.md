@@ -16,7 +16,7 @@ These scoped rules are not a claim to reproduce every rule in older one-off scan
 
 ## Find and review the reports
 
-1. Open the repository's **Actions** tab, select **Analyzer evidence**, and select the run for the candidate revision.
+1. Open the repository's **Actions** tab, select **Analyzer evidence**, and select the run for the source revision.
 2. Confirm all three jobs completed successfully. On pull requests, the checkout may be GitHub's synthetic merge commit: use the full `commit` in each artifact's `source.json`, not the PR title. Use a successful push/manual run on the final release commit for publication evidence.
 3. Download the `eslint-<SHA>-<attempt>`, `semgrep-<SHA>-<attempt>` and `codeql-<SHA>-<attempt>` artifacts. They are retained for 90 days; retain the accepted release evidence separately before expiry.
 4. Inspect reports, source hashes, tool versions, configuration and coverage. Verify no blocking finding or scan error remains; record accepted limitations and the reviewer's actual work.

@@ -2,7 +2,7 @@
 
 Help us answer a second question: **can someone new understand how to propose and test another scenario?** You can do this independently of testing the two default tools.
 
-The current extension points are ordinary source modules plus explicit changes to the shared gate. There is no automatic module loader or stable third-party SDK. A copied template does not register a new tool.
+The current extension points are ordinary source modules plus explicit changes to the pre-execution gate. There is no automatic module loader or stable third-party SDK. A copied template does not register a new tool.
 
 ## Prerequisites
 
@@ -44,7 +44,7 @@ Use the existing invoice and payment modules as examples. List all required touc
 - Host registration, manifest, configuration and package file allowlist as applicable.
 - Tests and plain-English documentation.
 
-All effects must pass through the shared gate. Do not add another allow path, dynamic executable callback, arbitrary filesystem path, or external service. A new module file alone is not an integration.
+All effects must pass through the pre-execution gate. Do not add another allow path, dynamic executable callback, arbitrary filesystem path, or external service. A new module file alone is not an integration.
 
 ## 4. Test your edited source
 

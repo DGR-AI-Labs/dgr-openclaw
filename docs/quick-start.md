@@ -1,6 +1,6 @@
 # Quick start: try the sandbox safely
 
-Try an early DGR plugin for OpenClaw and tell us whether it works on your machine. This is a test candidate, not a production release.
+Try DGR Gate’s pre-execution gate on two demo tools and tell us whether it works on your machine. Use synthetic data only.
 
 **No real money moves. No bank, Gmail, cloud account, real invoice, API key, or model subscription is needed.** The plugin stores fictional invoice text and simulated payment records inside a disposable container. It controls only its own two tools.
 
@@ -21,13 +21,13 @@ Open a terminal (PowerShell on Windows is fine). Copy each command below and wai
 ```sh
 git clone --branch main https://github.com/DGR-AI-Labs/dgr-openclaw.git
 cd dgr-openclaw
-git checkout 6f36499e25365c58612ad0899bc7a3c8bcbcf3e0
+git rev-parse HEAD
 docker build -t dgr-openclaw-test .
 docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-openclaw-test npm test
 docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges dgr-openclaw-test
 ```
 
-The checkout pins the merged implementation that passed the release-readiness audit. Git's “detached HEAD” message is expected. These instructions were updated after that commit, so keep this version open in your browser. If you already have a folder with this repository's name, use a fresh parent folder before cloning.
+The clone uses main. Record the printed commit with your test results; later changes to main may change the source. If you already have a folder with this repository's name, use a fresh parent folder before cloning.
 
 The initial build can take several minutes. The two test runs have networking disabled and use no host-directory mounts.
 
@@ -54,7 +54,7 @@ Reply to the person who sent you this guide, share a successful setup in [Discus
 
 ## Optional: try a conversation
 
-This is separate from the account-free test above. If you already use OpenClaw, the [installation and configuration guide](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/6f36499e25365c58612ad0899bc7a3c8bcbcf3e0/README.md) explains how to try sample invoice and simulated payment requests in a disposable profile. It requires the documented OpenClaw and Node versions and your own configured model, with its usual charges. Keep all data synthetic.
+This is separate from the account-free test above. If you already use OpenClaw, the [installation and configuration guide](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/README.md) explains how to try sample invoice and simulated payment requests in a disposable profile. It requires the documented OpenClaw and Node versions and your own configured model, with its usual charges. Keep all data synthetic.
 
 ## Cleanup
 

@@ -1,40 +1,48 @@
-# DGR Gate for OpenClaw
+# DGR Gate — a pre-execution gate for OpenClaw tool calls
 
-**An agent action should have to prove itself before it runs.**
+**A rule in the prompt is a request. A rule in the tool is a gate.**
 
-![Sandbox checks](https://github.com/DGR-AI-Labs/dgr-openclaw/workflows/Sandbox%20checks/badge.svg) ![Analyzer evidence](https://github.com/DGR-AI-Labs/dgr-openclaw/workflows/Analyzer%20evidence/badge.svg) ![Version](https://img.shields.io/badge/version-0.1.1-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
+![Sandbox checks](https://github.com/DGR-AI-Labs/dgr-openclaw/workflows/Sandbox%20checks/badge.svg) ![Analyzer evidence](https://github.com/DGR-AI-Labs/dgr-openclaw/workflows/Analyzer%20evidence/badge.svg) ![Version](https://img.shields.io/badge/version-0.1.2-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
+
+Tell an agent to confirm before acting and the instruction lives in its context —
+where it can be compacted away, or argued past by text the agent reads. DGR Gate
+moves the check into the tool that performs the action, against operator-configured policy rather than the model’s judgment.
+
+**This release gates two demo tools it ships itself — a synthetic payment and an
+invoice attachment. It does not gate your existing OpenClaw tools.** It exists so you can see the mechanism work, and tell us which real action to gate next.
 
 ## What it does
 
-- Requires an invoice stored by `dgr_invoice_attachment` before `dgr_sandbox_payment` can simulate a payment. This is synthetic test evidence, not proof of a real invoice or human approval.
-- Uses a closed input schema: any unknown field, including `trustedEvidence`, yields `INVALID_ACTION`. Payment evidence comes from stored state; invented fields cannot supply it.
-- Commits a synthetic effect and its hash-chained decision record together, checks replay, and stops further actions after storage failure. Record verification is self-consistency-only.
+- Requires an invoice stored by `dgr_invoice_attachment` before `dgr_sandbox_payment` can simulate a payment. The evidence is synthetic text, not proof of a real invoice or human approval.
+- Checks proposed actions against a closed schema and deterministic policy. Unknown fields, including `trustedEvidence`, yield `INVALID_ACTION`; they cannot replace stored evidence.
+- Commits each synthetic effect with its hash-chained decision record in one SQLite transaction. Replay checks and storage-failure handling are shared by both tools. Some refusals and failures have no record.
 
-The gate sits inside the two tools that own these effects. Through these tools, there is no route around it to the sandbox effects or ledger. The model does not decide whether the gate runs. This does not constrain the host operator, who can change the plugin, policy or database, or use other tools.
+## Where the gate sits
+
+`DGR demo tool → pre-execution gate → synthetic effect + decision record`
+
+The check runs inside each tool’s execution path; the model does not choose whether to invoke it. Policy comes from host configuration, not an agent-supplied claim. This is not policy secrecy: the host operator can change the plugin, policy or database, and other tools are outside this gate.
 
 ## Install
 
 ```sh
 openclaw plugins install clawhub:@dgr-ai-labs/openclaw-dgr-gate --accept-capabilities
-```
-
-For reproducible installs, select the version explicitly:
-
-```sh
-openclaw plugins install clawhub:@dgr-ai-labs/openclaw-dgr-gate@0.1.1 --accept-capabilities
 openclaw plugins inspect dgr-gate --runtime --json
 ```
 
-ClawHub currently resolves the unpinned command to `0.1.0`; the pinned `0.1.1` command becomes available when this patch is published. A non-prerelease version does not expand scope or establish production assurance.
+For a reproducible install matching this source version:
 
-Requires OpenClaw **2026.9.5** and Node **>=24.16.0 <25**. Use a disposable profile for the first trial. The npm package name is `@dgr-ai-labs/openclaw-dgr-gate`; the manifest ID and configuration key are `dgr-gate`. Review the installer's capability prompt and restart the Gateway after installation. Conversational use needs your normal host model setup; the container test below does not.
+```sh
+openclaw plugins install clawhub:@dgr-ai-labs/openclaw-dgr-gate@0.1.2 --accept-capabilities
+```
 
+Requires OpenClaw **2026.9.5** and Node **>=24.16.0 <25**. Use a disposable profile first. Package name: `@dgr-ai-labs/openclaw-dgr-gate`; manifest/configuration ID: `dgr-gate`. Review the capability prompt and restart the Gateway after installation. Conversational use needs your normal host model setup.
 
 [Container demo and source installation](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/local-demo.md) · [Moving from DGR Sandbox](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/migration.md).
 
 ## Starter policy
 
-Merge this entry into the selected profile's configuration; keep existing entries:
+Merge into the selected profile’s configuration, keeping existing entries:
 
 ```json
 {"plugins":{"entries":{"dgr-gate":{"enabled":true,"config":{"maxPaymentMinor":1000,"allowedDestinations":["sandbox-vendor"],"maxAttachmentBytes":4096}}}}}
@@ -48,28 +56,28 @@ Add `dgr-gate` and its two tools to any allowlists. Restart the Gateway after po
 | `allowedDestinations: ["sandbox-vendor"]` | Pay `other` | `DESTINATION_NOT_ALLOWED` |
 | `maxAttachmentBytes: 4096` | Attach 4097 ASCII bytes | `ATTACHMENT_LIMIT` |
 
-Only synthetic text belongs in the invoice store. Each invoice ID can be attached once and paid once; restarting preserves that history. More policy examples are in [docs/policies.md](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/policies.md).
+Use only synthetic invoice text. Each invoice ID can be attached once and paid once; restarting preserves that history. [More policy examples](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/policies.md).
 
 ## Results and reasons
 
-Common refusals and fail-closed outcomes; [all 13 codes and precedence](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/reasons.md).
+Common outcomes below; [all 13 reason codes and precedence](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/reasons.md).
 
 | Code | Status | Trigger |
 | --- | --- | --- |
-| `AMOUNT_LIMIT` | `denied` | Payment exceeds configured per-action amount |
+| `AMOUNT_LIMIT` | `denied` | Payment exceeds the configured amount |
 | `DESTINATION_NOT_ALLOWED` | `denied` | Destination is outside the configured list |
-| `INVOICE_REQUIRED` | `denied` | Payment has no stored invoice |
+| `INVOICE_REQUIRED` | `denied` | No stored invoice |
 | `INVOICE_ALREADY_PAID` | `denied` | Invoice already has a payment |
 | `ATTACHMENT_LIMIT` | `denied` | Invoice text exceeds the configured UTF-8 byte limit |
-| `DEADLINE_EXCEEDED` | `denied` or `unavailable` | Admission deadline reached before effect insertion, or later before commit; the latter rolls back and latches unavailable |
-| `STORE_UNAVAILABLE` | `unavailable` | Gate/plugin already stopped or faulted, or storage setup/execution threw at the tool boundary |
-| `STORE_FAILURE` | `unavailable` or `uncertain` | Transaction work failed; if commit had started, its durable outcome may be ambiguous |
+| `DEADLINE_EXCEEDED` | `denied` or `unavailable` | Admission deadline reached before effect insertion or before commit |
+| `STORE_UNAVAILABLE` | `unavailable` | Gate stopped or faulted, or storage setup failed |
+| `STORE_FAILURE` | `unavailable` or `uncertain` | Transaction failed; a commit already started may have an ambiguous outcome |
 
-Do not automatically retry `uncertain` results. Stop the Gateway and inspect state before recovery. A missing call ID is not recorded; committed decisions have receipts. Other failures may have no receipt.
+Do not automatically retry `uncertain` results. Stop the Gateway and inspect state before recovery. Missing call IDs and several failure paths return `recorded: false`; committed decisions have receipts.
 
 ## Worked run
 
-Fresh local `npm run test:installed` output through the real Gateway, without a model:
+Example output from the installed-host test through the real Gateway, without a model:
 
 ```text
 INVOKED dgr_invoice_attachment attach-demo simulated ALLOWED
@@ -81,39 +89,32 @@ INVOKED dgr_invoice_attachment fault-call unavailable STORE_FAILURE
 INVOKED dgr_invoice_attachment latched-call unavailable STORE_UNAVAILABLE
 ```
 
-The gate checks a **1000 ms admission deadline** before effects and again before commit. If either check sees that the deadline has elapsed, it blocks or rolls back instead of committing an allowed effect. This is a fail-closed admission rule, not a promise about call completion time.
+The pre-execution gate checks a **1000 ms admission deadline** before effects and again before commit. An expired check refuses the action or rolls back and stops further actions. This fail-closed property is not a promise about call completion time.
 
 ## ⚠️ What this does not do yet
 
-- It gates only `dgr_sandbox_payment` and `dgr_invoice_attachment`, not other OpenClaw tools.
-- The operator can edit the database or plugin. Hash-chained record verification is **self-consistency-only**, not proof against an operator.
-- State is `dgr-sandbox/sandbox.sqlite` under the host's state directory. Deleting it resets invoices, payments, decisions and replay history. The unavailable latch is in memory, not a durable lockout.
-- No provenance attestation is established for this candidate. The old published beta reports `hasProvenance: false`, tier `source-linked`, scope `artifact-only`; those results do not transfer to the renamed package.
-- This is a sandbox: no real funds, caller-selected file writes, or external uploads. Synthetic invoice text is stored in the local SQLite file. No network calls exist in `src/`; this is not a claim about host dependencies.
+- It gates only `dgr_sandbox_payment` and `dgr_invoice_attachment`, not other OpenClaw tools. No real funds, caller-selected file writes or external uploads occur.
+- The operator can edit the plugin or database. Record verification is **self-consistency-only**; it does not establish authenticity against an operator or completeness without a trusted external anchor.
+- State lives in `dgr-sandbox/sandbox.sqlite` under the host’s state directory. Deleting it resets invoice, payment, decision and replay history. The unavailable latch is in memory, not a durable lockout.
+- Synthetic invoice text is stored in SQLite. There are no network calls in `src/`; this does not describe host dependencies.
 
-## Why this exists
+## Why this exists and apply this to your case
 
-This tests evidence-gated execution in a small synthetic workflow. Future work will explore governance across more action classes, with source review and tests for each addition. That is roadmap intent, not a current capability; the [architecture](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/architecture.md) keeps registration explicit.
+The two demo tools let you examine a pre-execution gate with deterministic checks, stored evidence and fail-closed handling. Broader action coverage is future work.
 
-## Apply this to your case
-
-Which action would you want gated: a payout, a mass-message, a credential read, or a destructive file operation? None of these real actions is gated by this sandbox. Use the [use-case starter](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/templates/use-case/README.md) to describe your workflow, evidence source, policy and failure behavior, then share it in Discussions. These are proposals for future work, not available integrations.
+Which real action would you want gated: a payout, a mass-message, a credential read or a destructive file operation? None is gated by this demo. Use the [use-case starter](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/templates/use-case/README.md) to describe the action, evidence, policy and failure behavior. These are proposals, not available integrations; see the [architecture](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/architecture.md).
 
 ## Testing, removal and feedback
 
-Local pinned-host checks: **44 tests passed, 6/6 mutation controls killed, package check passed, and one installed-host test passed with seven Gateway invocations**. The badges show remote workflow state, not CI acceptance of this unpublished branch.
+Run the [container checks](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/local-demo.md) for unit/SQLite tests and installed-host dispatch. This is not a conversational-agent or production payment test. The badges link to CI; they do not certify the plugin.
 
-For `@dgr-ai-labs/openclaw-dgr-gate@0.1.0`, checked 2026-09-24: [version-level verification](https://clawhub.ai/api/v1/packages/%40dgr-ai-labs%2Fopenclaw-dgr-gate/versions/0.1.0) and [package-level scan](https://clawhub.ai/api/v1/packages/%40dgr-ai-labs%2Fopenclaw-dgr-gate) both report `clean`. This describes the published artifact, not this edited checkout, and is not certification or provenance attestation.
-
-Preview removal, then uninstall from the same profile used to install:
+Preview removal, then uninstall from the profile used to install:
 ```sh
 openclaw plugins uninstall dgr-gate --dry-run
 openclaw plugins uninstall dgr-gate
 ```
 
-Inspect the host state directory separately for `dgr-sandbox/sandbox.sqlite`; do not assume uninstall erased the data. Preserve it if you need the history. Deleting it is a reset, not recovery of the original record.
-
-Share your OS, OpenClaw version and outcome in [Discussions](https://github.com/DGR-AI-Labs/dgr-openclaw/discussions), report defects through [Issues](https://github.com/DGR-AI-Labs/dgr-openclaw/issues/new/choose), and use [private vulnerability reporting](https://github.com/DGR-AI-Labs/dgr-openclaw/security/advisories/new) for security findings.
+Inspect the host state directory separately; do not assume uninstall erased SQLite history. Deleting it resets the record rather than recovering it. Share your OS, host version and outcome in [Discussions](https://github.com/DGR-AI-Labs/dgr-openclaw/discussions), report defects through [Issues](https://github.com/DGR-AI-Labs/dgr-openclaw/issues/new/choose), and report vulnerabilities [privately](https://github.com/DGR-AI-Labs/dgr-openclaw/security/advisories/new).
 
 ## Credits
 
@@ -122,9 +123,8 @@ Share your OS, OpenClaw version and outcome in [Discussions](https://github.com/
 - **[Gaziz Nugmanov](https://github.com/gaziz)** — `gaziz`
 - **[Sergiu Bakayev](https://github.com/bakaevs)** — `bakaevs`
 
-Credit acknowledges contribution. It is not certification of the claims in this
-README; see [docs/release-review.md](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/docs/release-review.md).
+Credit acknowledges contribution, not certification.
 
-## Authorship
+## Provenance
 
-Authored by Codex under founder direction. This is a separate JavaScript/SQLite sandbox, with no inherited production assurance. Published `0.1.0` is tag `v0.1.0` at commit `9c46d5a8c3711da6d1909a7c565329fedc750217`. These documentation edits are not part of that published artifact. See [RELEASING.md](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/RELEASING.md).
+Authored by Codex under founder direction. This is a separate JavaScript/SQLite demo with no inherited production assurance. Source linkage, record hashes and registry scans do not establish build provenance attestation. Consult [release evidence and procedures](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/main/RELEASING.md) for the exact source/artifact under examination.

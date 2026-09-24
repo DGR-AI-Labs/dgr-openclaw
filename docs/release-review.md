@@ -1,33 +1,21 @@
-# Release review: 0.1.0-beta.1
+# Release evidence and review requirements
 
-## Scope and approvals
+## Scope
 
-This release covers only synthetic invoice attachment and simulated USD payment on OpenClaw 2026.9.5 and Node 24. It does not cover the proposed refund tool, real funds, unrelated host tools or production assurance.
+The pre-execution gate controls synthetic invoice attachment and simulated USD payment on the documented OpenClaw/Node versions. It does not control unrelated tools, move real funds or establish production assurance.
 
-- Founder release approval: given explicitly by the repository owner in the Codex project conversation on 2026-09-23 ("i approve release"). Recorded here by Codex under that instruction. The remaining reviews and publication checks are not waived.
-- Human PR review: `mtykhenko` approved [PR #1](https://github.com/DGR-AI-Labs/dgr-openclaw/pull/1), which merged on 2026-09-23.
-- Implementation audit baseline: `6f36499e25365c58612ad0899bc7a3c8bcbcf3e0`.
-- Final release source: to be recorded after review of the documentation cleanup. A review of the baseline alone does not cover later changes.
-- Release maintainer and publisher operator: to be named before publication.
-- Release review policy: the founder removed the separate non-author cross-model review requirement on 2026-09-23. Independent human review, required analyses, adversarial evidence and authorship disclosure remain required.
-- Explicit analyzer-evidence acceptance: not yet recorded here. Identify the reviewer, reviewed revision, reports inspected, evidence links and accepted limitations.
+## Evidence to retain
 
-## Observed readiness evidence
+1. Record the exact source revision, artifact digest, maintainer and publication authorization.
+2. Retain independent human review, analyzer scope/results and finding dispositions against that revision. Automated checks and author-side validation do not substitute for independent human review.
+3. Run unit/SQLite tests, deliberate-bug controls, package checks and installed-host dispatch tests. Distinguish these from model-driven conversation, real-service execution and customer use.
+4. Inspect package-level and exact-version registry metadata separately. Verify installation and rendered content for the exact artifact under examination.
+5. Record actual authorship and reviewer work. Credits do not certify the mechanism.
 
-The baseline's [merged-commit CI](https://github.com/DGR-AI-Labs/dgr-openclaw/actions/runs/35903047401) passed. A separate Codex audit reran the merged source in an existing isolated OpenClaw 2026.9.5 Docker image, with network disabled: 44 unit/SQLite tests passed, all six deliberate-bug controls were caught, package allowlist validation passed, and the installed-host test passed seven real Gateway tool invocations. This is author-side validation, not an independent human rerun.
+The [analyzer guide](analyzer-evidence.md) explains evidence collection. Source linkage is not authenticated build provenance, and sandbox record consistency is not authenticity against an operator.
 
-ClawHub CLI 0.23.3 reported Plugin Inspector PASS with zero breakages or warnings. Its no-upload preview resolved `@dgr-ai-labs/openclaw-sandbox`, version `0.1.0-beta.1`, 12 files and 12,644 archive bytes at the baseline commit. Later documentation changes change the archive and require a new preview. `private: true` did not block those local checks; retain it as an npm-publication guard unless a verified registry requirement requires changing it.
+## Historical evidence
 
-The original PR describes one-off Semgrep, ESLint and CodeQL results. The [Analyzer evidence workflow](analyzer-evidence.md) now provides reports bound to each scanned revision; a successful run on the final release commit should be used for the release review. The release reviewer must inspect the underlying reports, source bindings, scanned scope and limitations before accepting them; the PR summary alone is not that acceptance. The readiness audit did not rerun these analyzers.
+The [earlier review record](https://github.com/DGR-AI-Labs/dgr-openclaw/blob/66da14eac6e3088de8c0b2a363d3e7fc213b6d6f/docs/release-review.md), [PR #1](https://github.com/DGR-AI-Labs/dgr-openclaw/pull/1) and [baseline CI run](https://github.com/DGR-AI-Labs/dgr-openclaw/actions/runs/35903047401) retain their original context. They do not establish acceptance of later changes.
 
-GitHub Discussions and private vulnerability reporting were confirmed enabled. No ClawHub identity was logged in during the audit, so publisher ownership remains unverified. Registry lookup did not establish a visible published package. No registry installation or model-driven conversation was tested.
-
-## Remaining publication steps
-
-1. Record the completed independent reviews, analyzer-evidence acceptance and any finding resolutions against the final source revision.
-2. Name the maintainer/operator and verify the authenticated account may publish as `dgr-ai-labs`.
-3. Check out the final reviewed revision. Run required checks, inspect the package, and repeat ClawHub validation and the publish dry run with the `beta` tag. Record the exact source commit and preview. A Git tag and GitHub prerelease are recommended release references, not substitutes for evidence.
-4. Publish only that candidate under the recorded founder approval; wait for registry verification and availability.
-5. Verify a fresh install of the actual published version in a disposable profile. Record the result and verified installation command before announcing availability.
-
-Documentation prepared by OpenAI Codex under repository-owner direction. This file records release status; it is not an independent review.
+Documentation authored by Codex under repository-owner direction; this document is not an independent review.
