@@ -1,6 +1,14 @@
 # Changelog
 
-## 0.1.0-beta.2 — unpublished candidate
+## 0.1.0 — prepared, not yet published
+
+The following release note applies when the founder publishes this version with the `latest` distribution tag:
+
+**0.1.0** — First non-prerelease. Adds a bundled listing icon. No behavior
+change: the gate, policy fields, reason codes, and two-tool scope are unchanged
+from 0.1.0-beta.2. Unpinned installs now resolve here.
+
+## 0.1.0-beta.2 — historical release
 
 - Renames the package to `@dgr-ai-labs/openclaw-dgr-gate`, display name DGR Gate and plugin/config ID `dgr-gate`.
 - Preserves tool names, the `dgr-sandbox/sandbox.sqlite` state path, ledger formats and gate behavior. See README for config migration; do not load both identities together.
