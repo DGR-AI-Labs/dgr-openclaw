@@ -6,7 +6,6 @@ import assert from 'node:assert/strict';
 const root = new URL('../', import.meta.url);
 const read = name => readFileSync(new URL(name, root), 'utf8').replace(/\r\n/g, '\n');
 const retiredNames = /decision gate|evidence-gated|admission rule|deterministic gate/i;
-const escapeRegex = text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const semver = '(\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?)';
 function markdownFiles(directory) {
   return readdirSync(new URL(directory + '/', root), { withFileTypes: true }).flatMap(entry => {
@@ -48,10 +47,17 @@ function commandLines(text) {
   return commands;
 }
 function checkCommandPins(name, text, pkg) {
-  const packagePin = new RegExp(escapeRegex(pkg.name) + '@' + semver, 'g');
-  const archivePin = new RegExp(escapeRegex(pkg.name.replace(/^@/, '').replace('/', '-')) + '-' + semver + '\\.tgz', 'g');
+  const packagePin = new RegExp('^' + semver);
+  const archivePin = new RegExp('^' + semver + '\\.tgz');
+  const archivePrefix = pkg.name.replace(/^@/, '').replace('/', '-') + '-';
   for (const [line, command] of commandLines(text)) {
-    const pins = [...command.matchAll(packagePin), ...command.matchAll(archivePin)].map(match => match[1]);
+    const pins = [];
+    for (const [prefix, pattern] of [[pkg.name + '@', packagePin], [archivePrefix, archivePin]]) {
+      for (const fragment of command.split(prefix).slice(1)) {
+        const match = fragment.match(pattern);
+        if (match) pins.push(match[1]);
+      }
+    }
     if (command.includes(pkg.name)) {
       pins.push(...[...command.matchAll(new RegExp('--version(?:=|\\s+)["\x27]?' + semver, 'g'))].map(match => match[1]));
     }
