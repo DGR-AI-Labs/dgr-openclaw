@@ -17,6 +17,17 @@ README.md is authoritative for public scope and copy; package.json and openclaw.
 
 Before publishing, confirm access to the existing `dgr-ai-labs` namespace and that version `0.1.0` is available under the existing package identity. No new account or namespace is needed or created by this task. Stop the Gateway, preserve `dgr-sandbox/sandbox.sqlite`, remove the old plugin and migrate the config/allowlist ID to `dgr-gate` when upgrading; never load both identities together. Tool names and database format/path remain unchanged. Test fresh installation and existing-state migration before announcing. Set the approved GitHub About line only after integration.
 
+## README remediation checks before the next release
+
+The published `0.1.0` tag resolves to `9c46d5a8c3711da6d1909a7c565329fedc750217`. This content-only remediation keeps that version unchanged for review; do not overwrite its published artifact. Select a new version and update the version-specific commands below in a separate release step.
+
+- Run `wc -l README.md`: at most 130 lines. This is an editorial budget, not a verified ClawHub pixel/collapse threshold; inspect the actual listing after publication.
+- Run `npm run check:listing`: the reviewed hook/description pairing must agree, and the package description must not occur verbatim in README.md. Keep the two-tool scope explicit in both surfaces.
+- Registry copy must cite this package's exact published version. Re-run package and version `clawhub package inspect` and distinguish `package.scanStatus` from `version.verification.scanStatus`; no predecessor's scan establishes this package's result.
+- Rebuild the icon twice and compare hashes. `npm pack --dry-run` must include both README.md and assets/icon.png.
+- HTTP GET every README URL against main before tagging, including migration, reasons and local-demo guides. New main-branch links will not resolve until these docs are merged. Check all four credit logins without rewriting founder-supplied entries.
+- Verify the heading order and unchanged limitations. Review credit wording as acknowledgement, never certification. Preserve the admission-deadline qualification and uncertain-result warning.
+
 ## Required source, artifact and catalog checks
 
 Before tagging 0.1.0, finish review and merge the icon, README and listing changes into main. The existing docs/release-review.md is historical beta.1 evidence, not acceptance of this new release. Obtain review and analyzer evidence for the final source. Source/runtime behavior is unchanged, but the new artifact and default channel still need release acceptance.

@@ -20,6 +20,8 @@ try {
     ['Family', /Family: `([^`]+)`/],
     ['Proposed discovery topics', /Proposed discovery topics: `([^`]+)`/],
     ['Release tag', /Release tag: `([^`]+)`/],
+    ['Reviewed hook', /Reviewed hook: `([^`]+)`/],
+    ['Reviewed description', /Reviewed description: `([^`]+)`/],
   ]);
   const value = label => {
     assert.ok(metadataPatterns.has(label), `Unknown metadata label ${label}`);
@@ -27,8 +29,14 @@ try {
     assert.ok(match, `Listing missing ${label}`);
     return match[1];
   };
-  const hook = readme.split('\n\n').slice(1, 3).join('\n\n');
-  assert.ok(hook.includes(pkg.description), 'README opening/package summary mismatch');
+  const hook = readme.split('\n\n')[1];
+  assert.equal(hook, value('Reviewed hook'), 'README hook differs from reviewed copy pairing');
+  assert.equal(pkg.description, value('Reviewed description'), 'Description differs from reviewed README hook pairing');
+  assert.ok(pkg.description.length < 220, 'Description must be under 220 characters');
+  assert.ok(!readme.includes(pkg.description), 'Description duplicated verbatim in README');
+  assert.ok(readme.trimEnd().split('\n').length <= 130, 'README exceeds 130 lines');
+  assert.ok(pkg.description.endsWith('Two synthetic sandbox tools in this release.'), 'Description must retain reviewed scope clause');
+  assert.ok(!/finance/i.test(pkg.description.split(':')[0]), 'Description lead must not use finance');
   assert.equal(pkg.version, manifest.version, 'Package/manifest version mismatch');
   for (const entry of [lock, lock.packages['']]) {
     assert.equal(entry.name, pkg.name, 'Lockfile name mismatch');
@@ -48,7 +56,7 @@ try {
   const fields = [
     ['name', pkg.name, 'Install; package.json name'],
     ['displayName', manifest.name, 'Title; openclaw.plugin.json name'],
-    ['summary', pkg.description, 'Opening scope paragraph; package.json description'],
+    ['summary', pkg.description, 'Reviewed hook plus What it does and limitations; package.json description'],
     ['readme', 'README.md; sha256:' + createHash('sha256').update(readme).digest('hex'), 'Entire README, including opening hook, limits and scan qualifier'],
     ['family', value('Family'), 'Listing release input; plugin implementation described in README'],
     ['version', pkg.version, 'Version badge and Install; both manifests and lockfile'],
