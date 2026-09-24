@@ -1,6 +1,6 @@
-# Architecture: one gate, source-reviewed use-case modules
+# Architecture: one pre-execution gate, source-reviewed use-case modules
 
-Status: implementation merged; founder release approval recorded on 2026-09-23. Remaining independent review and publication checks are tracked in [the release review record](release-review.md). Prepared by Codex under founder direction. The first release targets sandbox payment and invoice attachment only.
+The pre-execution gate controls only sandbox payment and invoice attachment. See the [review requirements](release-review.md) for the evidence needed for a release.
 
 ## How the pieces fit
 
@@ -14,7 +14,7 @@ Plugin registration and strict configuration
    └── Invoice attachment module
              │
              ▼
-       Shared developer gate
+       Shared pre-execution gate
        validate → policy → bind action → consume attempt
              │
              ▼
@@ -45,7 +45,7 @@ Keep the first release's registration explicit. The contract describes source co
 
 ## Shared components
 
-The shared gate owns policy evaluation, action binding, duplicate-attempt checks, storage transactions, decision records, failure behavior and dispatch. Both tools use the same sequence. A use-case module cannot replace a denial or report success after recording fails.
+The pre-execution gate owns policy evaluation, action binding, duplicate-attempt checks, storage transactions, decision records, failure behavior and dispatch. Both tools use the same sequence. A use-case module cannot replace a denial or report success after recording fails.
 
 Host configuration owns the policy and sandbox state location. Agent arguments contain only proposed action data. The simulator stores synthetic payments and bounded invoice content in the same database as its records, allowing atomic sandbox effects and records. This guarantee does not apply to external APIs or file writes.
 
@@ -83,4 +83,4 @@ The third independently contributed use case should test whether these boundarie
 
 ## Architecture acceptance
 
-The implementation must demonstrate that both tools pass through the same gate, malformed requests and missing policy deny, attempts cannot be replayed, unknown action versions refuse, effects and records have the declared transactional behavior, and a contributor can identify the finite touchpoints for a new module. See the candidate validation summary in README.md for observations and remaining review requirements.
+The implementation must demonstrate that both tools pass through the same gate, malformed requests and missing policy deny, attempts cannot be replayed, unknown action versions refuse, effects and records have the declared transactional behavior, and a contributor can identify the finite touchpoints for a new module. See README.md for verification commands and scope limits.

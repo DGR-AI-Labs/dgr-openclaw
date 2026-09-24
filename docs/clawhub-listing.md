@@ -1,71 +1,52 @@
 # ClawHub listing field map
 
-This is founder review material, not a publication action. README.md is authoritative for copy; package.json and openclaw.plugin.json constrain identity and declarations. The author-controlled descriptive surface is small: package description, README body, one manifest category, and discovery topics. Identity, compatibility and release provenance remain constrained metadata, not free marketing copy.
+README.md supplies the long description; package.json supplies the summary. The mechanism is a **pre-execution gate**. Deterministic checks, fail-closed handling and required payment evidence are properties of that mechanism. Coverage is limited to the two bundled demo tools.
 
-This table prepares patch `0.1.1` for `latest`; published `0.1.0` remains unchanged until the new patch is verified. The previous release `0.1.0-beta.2` remains a separate immutable historical artifact.
+## Reviewed copy and metadata
 
-## Confirmed field set and limits
+Reviewed hook: `**A rule in the prompt is a request. A rule in the tool is a gate.**`
 
-The recon's §10 was checked against the [publishing docs](https://docs.openclaw.ai/clawhub/publishing), and these upstream sources at 826992bd72b9f9ab09254dc43551facdf94cb07b:
+Reviewed description: `Prompt-level rules can be lost during compaction or ignored after reading untrusted text. DGR Gate checks policy inside the tool that runs the action. This release gates two demo tools, not your real ones.`
 
-- [Package schema](https://github.com/openclaw/clawhub/blob/826992bd72b9f9ab09254dc43551facdf94cb07b/packages/schema/src/packages.ts): lines 48–86 and 408–423.
-- [Renderer](https://github.com/openclaw/clawhub/blob/826992bd72b9f9ab09254dc43551facdf94cb07b/src/routes/plugins/$name.tsx): README 393; summary/topics 1182–1187; compatibility/configuration 1245–1312; repository/date/type 1542–1566; title 1705.
-- [Summary extraction](https://github.com/openclaw/clawhub/blob/826992bd72b9f9ab09254dc43551facdf94cb07b/convex/lib/packageRegistry.ts): 463–466 prefers package.json description.
-- [Version renderer](https://github.com/openclaw/clawhub/blob/826992bd72b9f9ab09254dc43551facdf94cb07b/src/components/PluginVersionsPanel.tsx): 280–299 and 354, version/date/distribution tags/changelog.
+Family: `code-plugin`. Proposed discovery topics: `["pre-execution-gate","agent-safety","tool-gating","fail-closed","policy-enforcement"]`. Release tag: `latest`.
 
-The README body is the confirmed long-description surface. Publish it whole, including own-tools/operator limits. There is no separate promotional excerpt. The opening principle is followed by What it does; the package summary is deliberately not repeated in the README. The reviewed pairing below ties the mechanism-led summary to the hook, the two named tools and their limitations. Semantic scope alignment is a human review; the script prevents either reviewed string from changing unnoticed. Metadata below is maintained here, not as a redundant README block.
-
-Reviewed hook: `**An agent action should have to prove itself before it runs.**`
-
-Reviewed description: `A deterministic gate for agent actions: nothing runs outside policy or off the record, and an action it cannot clear fails closed. Payments also require stored evidence. Two synthetic sandbox tools in this release.`
-
-## Package metadata
-
-Family: `code-plugin`. Proposed discovery topics: `["agent-safety","policy-enforcement","fail-closed","audit-trail","tool-gating"]`. Release tag: `latest`. These are release inputs, not assertions about the current registry. Display name, version, license and category in the table are quoted from the manifests; topics are the founder-approved discovery labels for the README mechanism, not additional capabilities.
+The summary is intentionally absent from README.md because the listing renders it above that document. The 220-character editorial threshold is not a claim about a registry publishing limit. Topics are limited to five, each at most 48 characters.
 
 <!-- fields:start -->
 | Field | Exact copy/value | README / defining source |
 | --- | --- | --- |
 | name | `"@dgr-ai-labs/openclaw-dgr-gate"` | Install; package.json name |
 | displayName | `"DGR Gate"` | Title; openclaw.plugin.json name |
-| summary | `"A deterministic gate for agent actions: nothing runs outside policy or off the record, and an action it cannot clear fails closed. Payments also require stored evidence. Two synthetic sandbox tools in this release."` | Reviewed hook plus What it does and limitations; package.json description |
-| readme | `"README.md; sha256:1fdb8ffaaaa08d282b33cb10cf12db72171e828a5291d3b11b6e6d32b98a93cd"` | Entire README, including opening hook, limits and scan qualifier |
+| summary | `"Prompt-level rules can be lost during compaction or ignored after reading untrusted text. DGR Gate checks policy inside the tool that runs the action. This release gates two demo tools, not your real ones."` | Reviewed hook plus What it does and limitations; package.json description |
+| readme | `"README.md; sha256:c9b974c0671c5b1ae7c894370b931f720a6d0f67e79cf699e65036b7a0d4920e"` | Entire README, including opening hook, scope and record limitations |
 | family | `"code-plugin"` | Listing release input; plugin implementation described in README |
-| version | `"0.1.1"` | Version badge and Install; both manifests and lockfile |
+| version | `"0.1.2"` | Version badge and Install; both manifests and lockfile |
 | license (README only) | `"Apache-2.0"` | License badge; package.json license; no dedicated registry field established |
 | categories | `["developer-tools"]` | openclaw.plugin.json categories; listing metadata, no separate README block |
-| topics | `["agent-safety","policy-enforcement","fail-closed","audit-trail","tool-gating"]` | Founder-approved labels for What it does and Results and reasons; listing release input |
-| distTags | `["latest"]` | Install latest-release qualifier; listing release input |
+| topics | `["pre-execution-gate","agent-safety","tool-gating","fail-closed","policy-enforcement"]` | Founder-approved labels for What it does and Results and reasons; listing release input |
+| distTags | `["latest"]` | Listing release input; not a statement of registry state |
 | icon | `"assets/icon.png; sha256:b6334604de81dfa6de351ec0247c94e551f89d346fe8dbee9ecc1c9dd9efe2a3; bytes:8498"` | Bundled asset; generated by scripts/build-icon.mjs; not additional scope copy |
 | sourceRepo | `"https://github.com/DGR-AI-Labs/dgr-openclaw"` | README repository links; package.json repository |
 <!-- fields:end -->
 
-| Additional confirmed rendered surface | Current value and README / defining source | Defining source / limit |
-| --- | --- | --- |
-| Compatibility | OpenClaw 2026.9.5; plugin API >=2026.9.5 <2026.9.6; minimum Gateway/build/SDK 2026.9.5. README Install states supported host; the exact API range is manifest-derived, not new listing copy. | package.json:35–41; registry-generated compatibility panel; string length NOT ESTABLISHED |
-| Configuration panel | maxPaymentMinor, allowedDestinations, maxAttachmentBytes; README Starter policy | openclaw.plugin.json:18–48; all optional; field description length NOT ESTABLISHED |
-| Publisher | dgr-ai-labs, scoped name in README Install | Registry owner from inspect; not an added claim of official status |
-| Version changelog | Old beta.1 response has empty string; no new listing changelog proposed | Registry inspection; string limit NOT ESTABLISHED |
-| Icon | Bundled `assets/icon.png`, generated by `scripts/build-icon.mjs`; 512×512 opaque RGBA mark, metadata rather than a new capability claim | Confirmed maximum 512 KiB; registry dimension limits NOT ESTABLISHED |
-| MCP/skills panels | Empty in inspected manifest summary; no README capability claim | Conditional renderer; not populated |
-| Artifact details, dates, statistics | Registry generated; no copied stale size, hash or popularity values | Renderer; no new README claims |
-| Scan/validation display | Published 0.1.0 version verification and package scan both clean; edited checkout unscanned; README Testing, removal and feedback | Separate registry values; not an author-set verdict |
-| Install snippet | Generated from package name; README Install leads with the plain command and supplies pinned 0.1.1 as an alternative | Published 0.1.0 unpinned and pinned installs were verified with capability consent; repeat for the next release |
+The exact manifest contracts are `{"tools":["dgr_sandbox_payment","dgr_invoice_attachment"]}`. Identity, compatibility, category and tool contracts come from the manifests; these labels do not expand runtime scope.
 
-Confirmed topic limits: at most 5, each at most 48 characters. One plugin category may be declared. Summary maximum, dedicated license/homepage/screenshots/permissions fields, and an independent long-description input are **NOT ESTABLISHED** and left unset. The summary toggle at 220 characters is a UI threshold, not a publishing limit. Apache-2.0 above is checked and rendered in README, not a claimed dedicated license field.
+## Drift check
 
-The exact manifest contracts are `{"tools":["dgr_sandbox_payment","dgr_invoice_attachment"]}` (openclaw.plugin.json:12–17). README What it does and limitations name those same two tools. A standalone contracts/permissions listing panel is NOT ESTABLISHED; do not invent one or describe absent permissions as a permission-free runtime.
+Run `npm run check:listing`. After a reviewed edit, run `npm run check:listing -- --write` and inspect the generated field map, then rerun the check. It checks the reviewed title/hook/summary, summary length and non-duplication, topic limits and GitHub topic alignment, retired terminology in headings/summary, source-version pins in documentation commands, badges, contracts, manifests, lockfile and packed icon. The README budget is 130 lines.
 
-## Drift check and release sync
+Command-pin validation covers README.md, GITHUB_ABOUT.md and Markdown files under docs/. It identifies this plugin’s package/archive versions and explicit version options, not unrelated Node or OpenClaw host versions. Release automation instructions in RELEASING.md require separate maintenance.
 
-Run `npm run check:listing`. To regenerate after a reviewed README edit, run `npm run check:listing -- --write`, then run the check again. It rejects tagline, version, license, category, topics, badge and whole-README drift, plus a missing/empty/oversized icon or an icon absent from npm pack output. It also rejects duplicated description text, a changed reviewed hook/description pairing, or a README over 130 lines. It does not authenticate or publish. Unknown registry string limits are not invented by the check.
+## Scope and records
 
-README and this field map must ship in the same commit. Follow RELEASING.md: review source → check and dry run → founder publication of the same clean commit → registry review → pinned install verification → announcement. Neither runtime refactor nor README edits are a license to republish 0.1.0-beta.1. Keep source linkage distinct from provenance attestation.
+Only the two named demo tools pass through this pre-execution gate. A synthetic effect and its record share a SQLite transaction; a missing call ID and several failure paths can have no record. Policy is operator-configured, not secret from the operator. Hash-chain checks establish self-consistency only. No registry scan result or provenance attestation is asserted by this field map.
 
-## Pre-listing blockers
+## Rendering and read access
 
-These edits need review and merge to main, a tag bound to the final clean source, a successful preview, founder publication with `latest`, new-version/package scan evidence, and both default and pinned registry-install checks. No tag, push or publication is performed in this remediation. Historical beta scans do not establish results for 0.1.0. Unconfirmed optional fields remain unset.
+See the [crawlability check](clawhub-listing-diagnosis.md) for raw-HTML and README-endpoint observations. Repeat both checks after changing registry content. HTTP availability does not establish search indexing. This repository cannot repair the upstream registry renderer.
 
-## Default README resolution
+## Source references
 
-The published beta.2 contains README.md, but the [unversioned README request](https://clawhub.ai/api/v1/packages/%40dgr-ai-labs%2Fopenclaw-dgr-gate/file?path=README.md&preview=1) returned 404 while the [beta.2-pinned request](https://clawhub.ai/api/v1/packages/%40dgr-ai-labs%2Fopenclaw-dgr-gate/file?path=README.md&preview=1&version=0.1.0-beta.2) returned 200. This was version selection against `latestVersion: null`, not a stale tag or missing README. Publishing `0.1.0` with `latest` resolved default version selection; default and version-pinned README requests returned 200 with the published content. Repeat those checks after any later content release. See RELEASING.md and the historical diagnosis.
+- [Package schema](https://github.com/openclaw/clawhub/blob/826992bd72b9f9ab09254dc43551facdf94cb07b/packages/schema/src/packages.ts)
+- [Listing renderer](https://github.com/openclaw/clawhub/blob/826992bd72b9f9ab09254dc43551facdf94cb07b/src/routes/plugins/$name.tsx)
+- [Summary extraction](https://github.com/openclaw/clawhub/blob/826992bd72b9f9ab09254dc43551facdf94cb07b/convex/lib/packageRegistry.ts)
