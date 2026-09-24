@@ -2,7 +2,7 @@
 
 This is founder review material, not a publication action. README.md is authoritative for copy; package.json and openclaw.plugin.json constrain identity and declarations. The author-controlled descriptive surface is small: package description, README body, one manifest category, and discovery topics. Identity, compatibility and release provenance remain constrained metadata, not free marketing copy.
 
-This table stages content changes against version `0.1.0`, which is already published with `latest`. The edited README and description are not that published artifact; a later release must select a new version. The previous release `0.1.0-beta.2` remains a separate immutable historical artifact.
+This table prepares patch `0.1.1` for `latest`; published `0.1.0` remains unchanged until the new patch is verified. The previous release `0.1.0-beta.2` remains a separate immutable historical artifact.
 
 ## Confirmed field set and limits
 
@@ -29,9 +29,9 @@ Family: `code-plugin`. Proposed discovery topics: `["agent-safety","policy-enfor
 | name | `"@dgr-ai-labs/openclaw-dgr-gate"` | Install; package.json name |
 | displayName | `"DGR Gate"` | Title; openclaw.plugin.json name |
 | summary | `"A deterministic gate for agent actions: nothing runs outside policy or off the record, and an action it cannot clear fails closed. Payments also require stored evidence. Two synthetic sandbox tools in this release."` | Reviewed hook plus What it does and limitations; package.json description |
-| readme | `"README.md; sha256:f8f5a497fab1cb7b6117573e01d95d53642b332b642fd807d70e285a54746a88"` | Entire README, including opening hook, limits and scan qualifier |
+| readme | `"README.md; sha256:1fdb8ffaaaa08d282b33cb10cf12db72171e828a5291d3b11b6e6d32b98a93cd"` | Entire README, including opening hook, limits and scan qualifier |
 | family | `"code-plugin"` | Listing release input; plugin implementation described in README |
-| version | `"0.1.0"` | Version badge and Install; both manifests and lockfile |
+| version | `"0.1.1"` | Version badge and Install; both manifests and lockfile |
 | license (README only) | `"Apache-2.0"` | License badge; package.json license; no dedicated registry field established |
 | categories | `["developer-tools"]` | openclaw.plugin.json categories; listing metadata, no separate README block |
 | topics | `["agent-safety","policy-enforcement","fail-closed","audit-trail","tool-gating"]` | Founder-approved labels for What it does and Results and reasons; listing release input |
@@ -50,7 +50,7 @@ Family: `code-plugin`. Proposed discovery topics: `["agent-safety","policy-enfor
 | MCP/skills panels | Empty in inspected manifest summary; no README capability claim | Conditional renderer; not populated |
 | Artifact details, dates, statistics | Registry generated; no copied stale size, hash or popularity values | Renderer; no new README claims |
 | Scan/validation display | Published 0.1.0 version verification and package scan both clean; edited checkout unscanned; README Testing, removal and feedback | Separate registry values; not an author-set verdict |
-| Install snippet | Generated from package name; README Install leads with the plain command and supplies pinned 0.1.0 as an alternative | Published 0.1.0 unpinned and pinned installs were verified with capability consent; repeat for the next release |
+| Install snippet | Generated from package name; README Install leads with the plain command and supplies pinned 0.1.1 as an alternative | Published 0.1.0 unpinned and pinned installs were verified with capability consent; repeat for the next release |
 
 Confirmed topic limits: at most 5, each at most 48 characters. One plugin category may be declared. Summary maximum, dedicated license/homepage/screenshots/permissions fields, and an independent long-description input are **NOT ESTABLISHED** and left unset. The summary toggle at 220 characters is a UI threshold, not a publishing limit. Apache-2.0 above is checked and rendered in README, not a claimed dedicated license field.
 
@@ -64,7 +64,7 @@ README and this field map must ship in the same commit. Follow RELEASING.md: rev
 
 ## Pre-listing blockers
 
-These edits need a new version selected in a separate release, review and merge to main, a tag bound to the final clean source, a successful preview, founder publication with `latest`, new-version/package scan evidence, and both default and pinned registry-install checks. No tag, push or publication is performed in this remediation. Historical beta scans do not establish results for 0.1.0. Unconfirmed optional fields remain unset.
+These edits need review and merge to main, a tag bound to the final clean source, a successful preview, founder publication with `latest`, new-version/package scan evidence, and both default and pinned registry-install checks. No tag, push or publication is performed in this remediation. Historical beta scans do not establish results for 0.1.0. Unconfirmed optional fields remain unset.
 
 ## Default README resolution
 

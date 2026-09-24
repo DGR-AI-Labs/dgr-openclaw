@@ -1,6 +1,6 @@
 {
   "name": "@dgr-ai-labs/openclaw-dgr-gate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "description": "A deterministic gate for agent actions: nothing runs outside policy or off the record, and an action it cannot clear fails closed. Payments also require stored evidence. Two synthetic sandbox tools in this release.",

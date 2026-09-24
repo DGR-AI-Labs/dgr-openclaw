@@ -14,7 +14,7 @@ docker run --rm --network none --cap-drop ALL --security-opt no-new-privileges d
 
 ```sh
 npm pack
-openclaw plugins install ./dgr-ai-labs-openclaw-dgr-gate-0.1.0.tgz --force --accept-capabilities
+openclaw plugins install ./dgr-ai-labs-openclaw-dgr-gate-0.1.1.tgz --force --accept-capabilities
 ```
 
 Use `--force` only for the local archive you reviewed. The published version is `0.1.0`; these documentation edits are staged for a future release.

@@ -2,7 +2,7 @@
 
 **An agent action should have to prove itself before it runs.**
 
-![Sandbox checks](https://github.com/DGR-AI-Labs/dgr-openclaw/workflows/Sandbox%20checks/badge.svg) ![Analyzer evidence](https://github.com/DGR-AI-Labs/dgr-openclaw/workflows/Analyzer%20evidence/badge.svg) ![Version](https://img.shields.io/badge/version-0.1.0-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
+![Sandbox checks](https://github.com/DGR-AI-Labs/dgr-openclaw/workflows/Sandbox%20checks/badge.svg) ![Analyzer evidence](https://github.com/DGR-AI-Labs/dgr-openclaw/workflows/Analyzer%20evidence/badge.svg) ![Version](https://img.shields.io/badge/version-0.1.1-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
 
 ## What it does
 
@@ -21,11 +21,11 @@ openclaw plugins install clawhub:@dgr-ai-labs/openclaw-dgr-gate --accept-capabil
 For reproducible installs, select the version explicitly:
 
 ```sh
-openclaw plugins install clawhub:@dgr-ai-labs/openclaw-dgr-gate@0.1.0 --accept-capabilities
+openclaw plugins install clawhub:@dgr-ai-labs/openclaw-dgr-gate@0.1.1 --accept-capabilities
 openclaw plugins inspect dgr-gate --runtime --json
 ```
 
-ClawHub currently resolves the unpinned command to `0.1.0`. A non-prerelease version does not expand scope or establish production assurance.
+ClawHub currently resolves the unpinned command to `0.1.0`; the pinned `0.1.1` command becomes available when this patch is published. A non-prerelease version does not expand scope or establish production assurance.
 
 Requires OpenClaw **2026.9.5** and Node **>=24.16.0 <25**. Use a disposable profile for the first trial. The npm package name is `@dgr-ai-labs/openclaw-dgr-gate`; the manifest ID and configuration key are `dgr-gate`. Review the installer's capability prompt and restart the Gateway after installation. Conversational use needs your normal host model setup; the container test below does not.
 
